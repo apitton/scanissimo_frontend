@@ -1,0 +1,190 @@
+<div id = "viewInvoice" class="modal" tabindex="-1">
+  <div class="modal-dialog invoice-modal">
+    <div class="modal-content invoice-modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Invoice details</h5>
+        <!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <div class="modal-body invoice-modal-body" id="viewInvoicesModal">
+        <div class="container">
+            <div class="row w-100">
+                <div class="col-2 d-flex justify-content-start w-100 h-100 p-0">
+                    <nav class = "w-100 d-flex flex-column justify-content-start align-items-start">
+                        <ul class = "pagination d-flex flex-column w-100">
+                            <li class="page-item actionLink modalChoice w-100"><span id="showInvoiceDetails" class="pagination currentPagination actionLink w-100" data-link="invoiceDetails">Details</span></li>
+                            <li class="page-item actionLink modalChoice" ><span id="showItems" class="pagination actionLink" data-link="invoiceItems">Items</span></li>
+                            <li class="page-item actionLink modalChoice"><span id="showImage" class="pagination actionLink" data-link="invoiceImage">Image</span></li>
+                        </ul>
+                        <ul class = "pagination d-flex flex-column w-100" style="margin-top: auto;">
+                            <li class="page-item w-100" id="showImage"><button id="genLinkModal" class="btn btn-primary d-flex justify-content-center w-100" type="button" title="Generate link"><i class="bi bi-link-45deg"></i></button></li>
+                            <li class="page-item"><button id="downloadModal" class="btn btn-primary d-flex justify-content-center w-100 mt-2" type="button" title="Download"><i class="bi bi-cloud-download"></i></button></li>
+                            <li class="page-item"><button id="deleteModal" class="btn btn-primary d-block justify-content-center w-100 mt-2" type="button" title="Delete"><i class="bi bi-trash3"></i></button></li>
+                            <li class="page-item"><button id="editModal" class="btn btn-primary d-block justify-content-center w-100 mt-2" type="button" title="Delete">Edit</button></li>
+                            <li class="page-item"><button id="validateModal" class="btn btn-primary d-block justify-content-center w-100 mt-2 restricted-disable" type="button" title="Validate">Validate</button></li>                            
+                        </ul>                        
+                    </nav>
+                </div>
+                <div class="col-10 d-flex flex-column h-100 overflow-y-scroll" >                    
+                    <div class="restricted-disable modalDisplay activeElement h-100 overflow-y-scroll" id="invoiceDetails">
+                        <table class="table table-striped overflow-y-scroll">
+                            <tr><th>Date</th><td><input id="receipt_date" class="input-plain" type="date" readonly/></td></tr>
+                            <tr><th>Amount</th><td><input id="receipt_amount" class="input-plain" type="text" readonly/></td></tr>                                                        
+                            <tr><th>VAT</th><td><input id="receipt_vat"class="input-plain" type="text" readonly/></td></tr>
+                            <tr><th>Amount ex VAT</th><td><input id="invoiceAmountExVat" class="input-plain" type="number" readonly/></td></tr>
+                            <tr><th>Currency</th><td><select id="receipt_currency" class="input-plain"><option id="receipt_currency_value" selected></option></option></select></td></tr>
+                            <tr><th>Supplier</th><td><input id="receipt_supplier" class="input-plain" type="text" readonly/></td></tr>                            
+                            <tr><th>Category</th><td><select id="receipt_category" class="input-plain"><option id="receipt_category_value" selected></option></select></td></tr>
+                            <tr><th>Added On</th><td><input id="added_on" class="input-plain" type="date" readonly/></td></tr>
+                            <tr><th>Validated by manager</th><td id="validated_by_manager"></td></tr>
+                            <tr><th>Comment</th><td><input id="comment" class="input-plain" type="text" readonly/></td></tr>
+                        </table>
+                    </div>
+                    <div class="restricted-disable modalDisplay h-100" id="invoiceItems"></div>
+                    <div class="restricted-disable modalDisplay h-100" id="invoiceImage"></div>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">        
+        <span id="modalInvoiceInfo" style="margin: auto;" data-bs-dismiss="modal"></span>
+        <button id="modalInvoiceYes" type="button" class="modalInvoiceButton btn btn-primary restricted-disable">Yes</button>
+        <button id="modalInvoiceNo" style="margin-right: auto;" type="button" class="modalInvoiceButton btn btn-secondary restricted-disable">No</button>
+        <button id="modalInvoiceCancel" type="button" class="modalInvoiceButton btn btn-secondary restricted-disable">Cancel</button>
+        <button id="modalInvoiceSave" style="margin-right: auto;" type="button" class="modalInvoiceButton btn btn-primary restricted-disable">Save changes</button>
+        <button id = "modalInvoiceClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>        
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container h-100 w-100 d-flex flex-column align-items-center">
+
+    <div class="row w-100 mt-3 mb-3 d-flex justify-content-center">
+        <div class="col d-flex justify-content-center"><span class="link" data-link="/pages/dashboard.html"><button type="button" id="backToDashboard" class="btn btn-primary"><i class="bi bi-arrow-left-circle-fill"></i>&nbsp;Back to dashboard</button></span></div>
+        <div class="col d-flex justify-content-center"><span class="link" data-link="/pages/receipts/addReceipts.html"><button type="button" id="uploadInvoice" class="btn btn-primary"><i class="bi bi-cloud-upload"></i>&nbsp;Upload Receipt</button></span></div>
+    </div>
+
+    <div class="row w-100 g-3 justify-content-center">
+        <div class="col-12 w-100 justify-content-center border boxShadow p-2">
+            <form id="searchForm" class="w-100">
+                <div class="row w-100 g-3 d-flex justify-content-center">
+                    <div class="col-lg-3">                
+                        <label for="dateFrom">Date From</label>
+                        <input type="date" id="dateFrom" name="dateFrom" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">  
+                        <label for="dateTo">Date To</label>
+                        <input type="date" id="dateTo" name="dateTo" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">  
+                        <label for="minAmount">Min Amount</label>
+                        <input type="text" id="minAmount" maxlength="10" size="8" name="minAmount" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">  
+                        <label for="maxAmount">Max Amount</label>
+                        <input type="text" id="maxAmount" maxlength="10" size="8" name="maxAmount" class="form-control"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 d-flex justify-content-start">
+                    <div class="col-lg-3">    
+                        <label for="category">Category</label>                
+                        <select id="category" name="category" size="1" class="form-control">   
+                            <option value="" selected></option>         
+                            <option value="test category 1">test category 1</option>
+                            <option value="test category 2">test category 2</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3">                        
+                        <label for="currency">Currency</label>
+                        <select id="currency" name="currency" size="1" class="form-control">
+                            <option value="" selected></option>
+                            <option value="GBP">test category 1</option>
+                            <option value="EUR">test category 2</option>
+                            <option value="USD">test category 2</option>
+                        </select>
+                    </div>
+                    <div class="col-lg-3 restricted-disable" id="validateSelector">                        
+                        <label for="validated">Validation status</label>
+                        <select id="validated" name="validated" size="1" class="form-control">
+                            <option value="" selected></option>
+                            <option value='validated'>&#x2705 Validated</option>
+                            <option value='unvalidated'>&#x23F3 Unvalidated</option>                            
+                        </select>
+                    </div>
+                    <div class="col-lg-3 restricted-disable" id="staffSelector">                        
+                        <label for="staff">Team member</label>
+                        <select id="staff" name="staff" size="1" class="form-control">
+                            <option value="" selected></option>                            
+                        </select>
+                    </div>
+                    <div class="col-lg-3 restricted-disable" id="clientSelector">                        
+                        <label for="client">Client</label>
+                        <select id="client" name="client" size="1" class="form-control">
+                            <option value="" selected></option>                            
+                        </select>
+                        <input id="viewMode" name="viewMode" class="restricted-disable" value="ind-self"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 d-flex justify-content-center">
+                    <button type="submit" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-search"></i> Find Receipts</button>
+                </div>
+                <input type="text" class="restricted-disable" name="userId" id="userId"/>
+                <input type="text" class="restricted-disable" name="userEmail" id="userEmail"/>            
+                <input type="text" class="restricted-disable" name="organisation_id" id="organisation_id"/>            
+            </form>
+        
+        </div>
+        
+    
+    <div class="row w-100 g-3 justify-content-center mt-3">
+        <div class="col-12 w-100 border boxShadow p-2">
+            <div class="row w-100 d-flex justify-content-center">
+                <div class="col-12" id='searchResults'>
+                    <p>No results yet</p>
+                </div>                
+            </div>
+            <div class="row d-flex justify-content-center w-100">
+                <div class="col .offset-1 d-flex align-items-center">
+                    <span id="paginationMessage"></span>
+                </div>
+                <div class="col d-flex justify-content-center" id="pagination">                    
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <nav>
+                        <ul id="maxResults" class="pagination d-flex align-items-center">                        
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center restricted-disable" id="actionButtons">
+                <div class="col d-flex justify-content-center">
+                    <button class="btn btn-primary" id="generateLink">
+                        <i class="bi bi-link-45deg"></i>
+                        Generate a link
+                    </button>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <button class="btn btn-primary" id="downLoadReceipts">
+                        <i class="bi bi-cloud-download"></i>
+                        Download receipts
+                    </button>
+                </div>
+                  <div class="col d-flex justify-content-center">
+                    <button class="btn btn-primary" id="deleteReceipts">
+                        <i class="bi bi-trash3"></i>
+                        Delete receipts
+                    </button>
+                </div>
+            </div>
+            <div class="row d-flex justify-content-center noOpacity" id="dlLink">
+                <div class="col w-100 mt-3 d-flex justify-content-center">
+                    <div class="input-group w-50">
+                        <input type="text" size="30" readonly class="form-control w-50" id="dlLinkInput"/>
+                        <button class="btn-outline-secondary" type="button" id="dlLinkCopy"><i class="bi bi-copy actionLink" title="Copy link"></i></span>&nbsp;
+                        <button class="btn-outline-secondary" type="button" id="dlLinkEmail"><i class="bi bi-send actionLink" title="Email link"></i></span>                    
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

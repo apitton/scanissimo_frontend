@@ -1,0 +1,186 @@
+<div class="container-fluid m-0 w-100 d-flex justify-content-center align-items-center">
+    <div class="row w-100 d-flex justify-content-center align-items-center">
+        <div id="missingInfo1" class="restricted-disable col-10 border boxShadow d-flex flex-column  align-items-center justify-content-center">
+            <h5>Only a few steps away... We just need to complete some information</h5>                
+                <div class="row mt-3 w-100 missingInputField" id="emailRow">
+                    <div class="col-12 w-100 d-flex justify-content-start">
+                        <input class="input-plain" size="30" value="email" data-email="">
+                        <input type="email" name="email" id="email" size="30" class="missingInputField">&nbsp;                        
+                        <button class="missingButton" id="editEmail" >Edit</button>&nbsp;
+                        <button class="missingButton" id="submitEmail" >Submit</button>&nbsp;                        
+                        <span class="restricted-disable text-success" id="emailSuccess">Email verified successfully</span>
+                    </div>
+                </div>
+                <div class="row mt-3 w-100 missingInputField" id="emailCodeRowExplain">
+                    <div class="col-12 w-100 d-flex justify-content-start">
+                        <p>We sent a verification code to your inbox. Please enter the code below</p>
+                    </div>
+                </div>
+                <div class="row mt-2 w-100 missingInputField" id="emailVerifRow">
+                    <div class="col-12 w-100 d-flex justify-content-start">
+                        <input class="input-plain" size="30" value="email verification code">
+                        <input name="emailCode" type="text" inputmode="numeric" pattern="\d{6}" maxlength="6" id="emailCode" size="30" class="verificationInput">&nbsp;&nbsp;
+                        <button class="missingButton"  id="resend_email" >Resend</button>&nbsp;
+                        <button class="missingButton"  id="verify_email" >Verify</button>
+                        <span id="verifyConfirm_email"></span>
+                    </div>
+                </div>
+                <div class="row mt-2 w-100 missingInputField">
+                    <div class="col-12 w-100">
+                        <hr>
+                    </div>
+                </div>
+                <div class="row mt-2 w-100 missingInputField" id="phoneRow">
+                    <div class='col-12 w-100' style="display:flex;" >
+                        <input class="input-plain" size="30" value="Mobile Number">
+                        <input  name="phone" class="missingInputField" id="phone" type="tel" size="19">&nbsp;
+                        <button class="missingButton btn btn-primary"  id="edit_phone" >Edit</button>&nbsp;
+                        <button class="missingButton btn btn-primary"  id="submit_phone" >Submit</button>&nbsp;
+                    </div>
+                </div>
+                <div class="row mt-2 missingInputField">
+                    <div class="col-12 w-100 d-flex justify-content-end">
+                        <span> </span>
+                        <span id="valid-msg" class="hide text-success">✓ Valid</span>
+                        <span id="error-msg" class="hide text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mt-2 w-100 missingInputField" id="phoneCodeRowExplain">
+                    <div class="col-12 w-100" id="phoneCodeRowExplain">
+                        <p>We sent a verification code to your phone. Please enter the code below</p>
+                    </div>
+                </div>
+                <div class="row mt-2 w-100 missingInputField" id="phoneCodeRow">
+                    <div class="col-12 w-100 d-flex justify-content-start">
+                        <input class="input-plain" size="30" value="Mobile Number verification code">
+                        <input name="phoneCode" type="text" inputmode="numeric" pattern="\d{6}" maxlength="6" id="phoneCode" size="30" class="verificationInput">&nbsp;&nbsp;
+                        <button class="missingButton btn btn-primary" id="resend_phone" >Resend Code</button>&nbsp;
+                        <button class="missingButton btn btn-primary" id="verify_phone" >Verify</button>
+                        <span class="restricted-disable text-success" id="phoneSuccess">Mobile number verified successfully</span>
+                    </div>
+                </div>
+        </div>
+        <div id="missingInfo2" class="restricted-disable col-10 border boxShadow d-flex flex-column  align-items-center justify-content-center">            
+            <form id="missingForm2">                
+                <div class="row w-100">
+                    <div class="col-12 w-100 d-flex flex-column">
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <h5 id="orgQuestion" class="required">Joining as an organisation or as a single user?</h5>
+                                <div class="row w-100">
+                                    <div class="col-6">
+                                        <input type="radio" id="organisation" name="org" value="org" />
+                                        <label for="organisation">&nbsp;Organisation</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="radio" id="single" name="org" value="single" />
+                                        <label for="single">&nbsp;Single user</label>
+                                    </div>
+                                </div>
+                                <div class="noOpacity" id="org_details">
+                                    <label for="org_name">Name of organisation</label>
+                                    <input type="text" size="30" name="org_name" id="org_name">
+                                    <h6>We will set up your organisation after registration</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100" id="acceptAccountantInvite">
+                            <div class="col-12">
+                                <p id="acceptAccountantInviteMessage"></p>
+                                <p>If you accept the invitation, you will be able to see their receipts and generate statements.</p>
+                                <p> Please note that in order to add receipts for yourself or for your clients, you will need to get a subscription.</p>
+                                <button type="button" class="btn btn-outline-primary">Accept</button>
+                                <button type="button" class="btn btn-outline-primary">Refuse</button>
+                            </div>
+                        </div> 
+                        <div class="row w-100" id="accountantJoining">
+                            <div class="col-12">
+                                <h5 id="accQuestion" class="required">Joining as an accountant?</h5>
+                                <div class="row w-100">
+                                    <div class="col-6">
+                                        <input type="radio" id="accountant" name="acc" value="acc" />
+                                        <label for="accountant">&nbsp;Yes, I am an accountant and will manage my customers receipts</label>
+                                    </div>
+                                    <div class="col-6">
+                                        <input type="radio" id="no_acc"  name="acc" value="noAcc" />
+                                        <label for="no_acc">&nbsp;No, I am not an accountant</label>
+                                    </div>
+                                </div>
+                                <div class="noOpacity" id="acc_details">
+                                    <label  for="acc_name">Name of your accountant firm</label>
+                                    <input  type="text" size="30" name="acc_name" id="acc_name">
+                                    <h6>We will set up your firm after registration</h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <h5 class="required" id="mfaQuestion" >Would you like to set up Multi Factor Authentification for added security?</h5>
+                                <h6>You will need to use a code from your authenticator app on each login</h6>
+                                <div><input type="checkbox" id="no_mfa"  name="mfa" value="none" />
+                                    <label  for="nomfa">&nbsp;No MFA</label></div>
+                                <div><input type="checkbox" id="mfa"  name="mfa" value="mfa" />
+                                    <label  for="mfa">&nbsp;Yes, set up MFA</label></div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <h5>Communication Preferences</h5>
+                                <div><input type="checkbox" id="required_comm" name="required_comm" value="required_comm" />
+                                    <label  class="required" for="required_comm">&nbsp;I agree to be contacted by phone or email about my subscription, login or receipts</label></div>
+                                <div><input type="checkbox" id="offers"  name="offers" value="offers" />
+                                    <label  for="offers">&nbsp;Contact me about your offers</label></div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <hr>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <h5>Terms and conditions</h5>
+                                <div><input type="checkbox" id="t_and_c" name="t_and_c" value="t_and_c"/>
+                                    <label  for="t_and_c">&nbsp;I have read and agree to the</label><span id="t_and_c_popup" class="actionLink blue required">&nbsp;terms and conditions</span></div>
+                            </div>
+                        </div>
+                        <div class="row w-100">
+                            <div class="col-12 w-100">
+                                <button type = "submit" class="btn btn-primary w-75">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="missingInfo3" class="restricted-disable col-10 border boxShadow d-flex flex-column  align-items-center justify-content-center">            
+            <form id="mfaForm">                
+                <div class="row w-100">
+                    <div class="col-12 w-100 d-flex flex-column align-items-center">
+                        <h5>Please scan the qr code with your authenticator</h5>
+                        <label for="verifCode">Verification Code:</label>
+                        <input id="verifCode" pattern="\d{6}" maxlength="6" name="verifCode" class="verificationInput" length="6">
+                        <img id="qrCode"/>
+                        <p>Or copy/paste into your app:</p>
+                        <div>
+                            <input type="text" size="30" readonly id="authCode"/>
+                            <button class="btn-outline-secondary blue" type="button" id="authCodeCopy"><i class="bi bi-copy actionLink" title="Copy code"></i></span>&nbsp;                                                
+                        </div>
+                        <button type="submit" id="mfaSubmit" class = "mt-2 btn btn-primary disabled">Submit</button>
+                        <span id="verifCodeMessage" class="mt-2 restricted-disable text-danger">Code invalid</span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

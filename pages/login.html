@@ -1,0 +1,36 @@
+<div class='container min-vh-100 d-flex align-items-center'>
+    <div class="row w-100 g-2">
+       
+        <div class="col border rounded p-4 boxShadow" id="localLogin">
+            <form id="loginForm">
+                <label for="email" class="form-label">Email Address / Phone Nb</label>
+                <input type="text" name="email" id="email" class="form-control" placeholder="name@domain.com / 07589478654"/>                
+                <label for="password" class="form-label">Password</label>
+                <input type="password" name="password" id="password" class="form-control"/>                      
+                <button type="submit" id="loginButton" class="btn btn-primary d-block mx-auto mt-3" disabled>Submit</button>                      
+            </form>
+            <p class="text-center mt-3">Don't have a login yet? <span class='link blue' data-link="/pages/signup.html">Sign up!</span></p>
+            <p class="text-center-mt-3 text-danger" id="loginError"></p>
+        </div>
+        <div id="mfaBox" class="col d-flex flex-column justify-content-center align-items-center ml-2">
+            <div id="default" class = "d-flex justify-content-center">OR</div>
+            <div id="mfa" class="restricted-disable d-flex flex-column justify-content-center align-items-center">
+                <h1>MFA</h1>
+                <form id="mfaForm" class="d-flex flex-column justify-content-center align-items-center">
+                    <label for="mfaCode">Enter your code here</label>
+                    <input id="mfaCode" name="mfaCode" length="6" class="verificationInput">
+                    <button id = "mfaCodeSubmit" type="submit" pattern="\d{6}" class="btn btn-primary disabled mt-3">Submit</button>
+                </form>
+                <div id="mfaError" class="text-alert"></div>
+            </div>
+        </div>
+        <div id="sso" class="col border rounded p-4 boxShadow d-flex flex-column justify-content-around ml-2">
+                <button id="google" class="btn btn-primary w-100"><i class="bi bi-google"></i>&nbsp;Continue with Google</button>
+                <button id="apple" class="btn btn-primary w-100"><i class="bi bi-apple"></i>&nbsp;Continue with Apple</button>
+                <button id="facebook" class="btn btn-primary w-100"><i class="bi bi-facebook"></i>&nbsp;Continue with Facebook</button>
+        </div>
+
+    </div> 
+    <div class="row"><div class="col"><p id="infoMsg"></p></div></div>
+</div>
+

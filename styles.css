@@ -1,0 +1,225 @@
+.boxShadow {
+    padding: 5px;
+    border: 3px solid black;
+    box-shadow: 5px 5px 10px black;
+    border-radius: 10px;
+}
+.hide {
+    display: none;
+}
+.required:after {
+    color: red;
+    content:"*";
+}
+.link {
+    cursor: pointer;    
+}
+.link.active, .link:hover, .actionLink:hover, .actionLink.active {
+    text-decoration: underline;
+}
+.actionLink {
+    cursor: pointer;    
+}
+.restricted-disable, #actionButtons.restricted-disable {
+    display: none !important;
+}
+.restricted-enable #actionButtons.restricted-enable {
+    display: flex !important;
+}
+.link-faded, span.link-faded, .link.link-faded.page-link {
+    cursor: default;
+    opacity: 0.5;
+}
+.link-disabled {
+    cursor: default;
+}
+.currentMaxRes, .currentPagination {    
+    background-color: lightskyblue;
+    border-radius: 10;
+}
+table > tbody > tr > td, table td, table th {
+    padding: .1rem !important;
+}
+.noOpacity {
+    opacity: 0;
+}
+.input-plain {
+    border: none;
+    background: transparent;
+    outline: none;
+    padding: 0;
+    margin: 0;
+    
+}
+.invoice-modal {
+    max-width: 100vh !important;
+    width: auto !important;
+    height: 85vh !important;
+    max-height: 85vh !important;
+}
+.invoice-modal-content {
+  height: 100%;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.invoice-modal-body {
+    height: 85vh;
+    width: auto;
+    overflow-y: auto;
+}
+.modalChoice:hover {
+    background-color: lightgrey;
+}
+.editable {
+    background-color:lightskyblue;
+}
+#dropzone {
+  border: 3px dashed #999;
+  border-radius: 10px;
+  padding: 40px;
+  text-align: center;
+  font-size: 1.2rem;
+  color: #555;
+  cursor: pointer;
+  transition: 0.2s, border-color 0.2s;
+}
+
+#dropzone.dragover {
+  background: #f0f8ff;
+  border-color: #007bff;
+}
+
+#mainSection {
+    height: 100%;
+}
+html, body {
+    height: 100%;
+}
+.blue {
+    color: #0d6efd;
+}
+.missing-info {
+    width: 45%;
+}
+.missingInput {
+    height: 100% !important;
+}
+.verificationInput {
+    letter-spacing: 0.5rem;  
+    text-align: center;    
+}
+.missingButton {
+    width: 10rem;
+    max-width: 10rem;
+    text-align: center;
+    background-color: #0d6efd;
+    border: none;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+}
+.missingButton:hover {
+    background-color:rgb(0,105,217); }
+
+.missingInputField {
+    height: 2.2rem;
+}
+.missingButtonDisabled {
+    opacity: 0.5;
+    cursor: none;
+}
+.text-red {
+    color: #dc3545;
+}
+#qrCode {
+    max-height: 150px;
+    max-width: 150px;
+}
+.page-break {
+  break-before: page;
+}
+.logo {
+    border: none !important;
+}
+.noListType {
+    list-style-type: none;
+}
+.logoEmail {
+    max-width: 300px;
+    width: 300px;
+}
+.logoHeader {
+    max-width: 30%;
+    border-radius: 0px 0px 10px 0px;
+    cursor: pointer;
+}
+.dashboard {
+    opacity: 0;
+    animation-name: appear;
+    animation-fill-mode: forwards;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+}
+@keyframes appear {
+    from { opacity: 0 }
+    to { opacity: 1 }
+}
+
+.border-right {
+    border-right: #555;
+    border-right: 1px;
+}
+.settingsButton {
+    width: 15rem;    
+}
+.smallButton {
+    width: 6rem;
+    height: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.section-faded {
+    opacity: 0.5;
+}
+.catRadio {
+    width: 4rem;
+}
+.down {
+    transform: rotate(90deg);
+    transform-origin: center;
+}
+.simpleLink {
+    cursor: pointer;
+    color: rgb(0,105,217);
+    border-radius: 20px;
+    transition: 0.8s;
+}
+.simpleLink:hover {
+    background-color: rgb(0,105,217);
+    border-radius: 20px;
+    color: white;
+    transition: 0.8s;
+}
+.caret::before {
+    content: "";
+    background: url('/pages/icons/arrow-circle-right.svg') no-repeat center;
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    margin-right: 0.5rem;
+    background-size: contain;
+    transition: 0.2s;
+}
+.caret.open::before {
+    transform: rotate(90deg);
+    transition: 0.2s;
+}
+.teamUl.open {
+    display: block;
+}
+.input {
+    width: 15rem;
+    height: 1.5rem;
+}

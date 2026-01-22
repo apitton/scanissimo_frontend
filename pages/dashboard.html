@@ -1,0 +1,84 @@
+<!DOCTYPE HTML5>
+<head><title>Scanissimo Dashboard</title></head>
+<body>    
+    <div class="container dashboard d-flex flex-column justify-content-center align-items-center mt-3 g-3">
+        <div class="row w-100 g-3 justify-content-center">
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="../images/receipts.jpg" class="card-img-top dash-img"/>
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-center">Receipts</h5>
+                        <!-- <p class="card-text d-flex justify-content-center">View and edit your receipts</p> -->
+                        <button id="viewReceipts" data-link="/pages/receipts/viewreceipts.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-eye-fill"></i>&nbsp;View your receipts</button>
+                        <button id="addReceipt" data-link="/pages/receipts/addreceipts.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-cloud-upload"></i>&nbsp;Add a new receipt</button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <img src="../images/statements.jpg" class="card-img-top"/>
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-center">Manage your statements</h5>
+                        <!-- <p class="card-text d-flex justify-content-center">Manage your statements</p> -->
+                        <button id="genStatement" data-link="/pages/statements/genstatement.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-file-text-fill"></i></i>&nbsp;Generate</button>
+                        <button id="viewStatements" data-link="/pages/statements/genstatement.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-eye-fill"></i>&nbsp;View</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                 <div class="card">
+                    <img src="../images/settings.jpg" class="card-img-top"/>
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-center">Settings</h5>
+                        <!-- <p class="card-text d-flex justify-content-center">Manage your statements</p> -->                        
+                        <button id="preferences" data-link="/pages/settings.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-gear-wide"></i>&nbsp;Preferences</button>
+                        <button type="button" class="w-75 m-2 btn btn-primary d-block mx-auto noOpacity">Placeholder</button>
+                    </div>
+                </div>
+            </div>  
+        </div>
+        <div class="row w-100 g-3 mt-3">
+            <div class="col-lg-4 restricted-disable" id="manager">
+                <div class="card">
+                    <img src="../images/manager.jpg" class="card-img-top"/>
+                    <div class="card-body">
+                            <h5 class="card-title d-flex justify-content-center">Your Team</h5>
+                            <!--<p class="card-text d-flex justify-content-center">Manage your statements</p> -->                            
+                            <button id="viewTeamReceipts" data-link="/pages/receipts/viewreceipts.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-eye-fill"></i>&nbsp;Team Receipts</button>
+                            <button id="teamStatement" data-link="/pages/statements/genStatement.html" type="button" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-file-text-fill"></i>Statements</button>
+                            <button type="button" class="w-75 m-2 btn btn-primary d-block mx-auto noOpacity">Placeholder</button>
+                            <button type="button" class="w-75 m-2 btn btn-primary d-block mx-auto noOpacity">Placeholder</button>
+                        </div>
+                </div>
+
+            </div>     
+            <div class="col-lg-4 restricted-disable" id="accountant">
+                <div class="card">
+                    <img src="../images/accountant.jpg" class="card-img-top"/>
+                    <div class="card-body">
+                            <h5 class="card-title d-flex justify-content-center">Accountant</h5>
+                            <!--<p class="card-text d-flex justify-content-center">Manage your statements</p> -->
+                            <button id="manageCustomers" data-link="/pages/accountants/manage-customers.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-person-add"></i>&nbsp;Your customers</button>
+                            <button id="viewCustomerReceipts" data-link="/pages/receipts/viewreceipts.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-eye-fill"></i>&nbsp;View Receipts</button>
+                            <button id="genCustomerStatement" data-link="/pages/statements/genStatement.html" type="button" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-file-text-fill"></i>Statements</button>
+                            <button id="addCustomerReceipt" data-link="/pages/receipts/addReceipts.html" type="button" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-cloud-upload"></i>Add Receipt</button>
+                        </div>
+                </div>
+            </div>
+            <div class="col-lg-4 restricted-disable" id="organisation">
+                <div class="card">
+                    <img src="../images/organisation.jpg" class="card-img-top"/>
+                    <div class="card-body">
+                        <h5 class="card-title d-flex justify-content-center">Your Organisation</h5>
+                        <!--<p class="card-text d-flex justify-content-center">Manage your statements</p> -->
+                        <button id="manageOrganisation" data-link="/pages/organisations/manage-organisation.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-person-add"></i>&nbsp;Your Organisation</button>
+                        <button id="viewOrganisationReceipts" data-link="/pages/receipts/viewreceipts.html" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-eye-fill"></i>&nbsp;View Receipts</button>
+                        <button id="genOrgStatement" data-link="/pages/statements/genStatement.html" type="button" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-file-text-fill"></i>Statements</button>
+                        <button id="addOrganisationReceipt" data-link="/pages/receipts/addReceipts.html" type="button" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-file-text-fill"></i>Add Receipt</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>

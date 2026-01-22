@@ -1,0 +1,142 @@
+<!DOCTYPE HTML>
+<html id="addInvoicesHtml">
+    <body class="h-100">
+        <div class="modal" id="infoModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Info</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d'flex justify-content-center">
+                        <p id="infoText">Modal body text goes here.</p>
+                    </div>
+                    <div class="modal-footer">        
+                        <button type="button" id="closeButton" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" id="yesButton" class="btn btn-primary restricted-disable" data-bs-dismiss="modal">Yes</button>
+                        <button type="button" id="noButton" class="btn btn-secondary restricted-disable" data-bs-dismiss="modal">No</button>
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="container w-100 d-flex align-items-center flex-column">            
+            
+            <div class="row w-100 d-flex">
+                <div class="col-12 d-flex flex-column border boxShadow restricted-disable" id="accountantOnly"> 
+                    <div class="row w-100 g-4 d-flex">
+                        <div class="col-lg-4">                
+                            <label id="clientLabel" for="client" class="required">Client</label>
+                            <select id="client" name="client" class="form-control">
+                                <option value=""></option>"
+                            </select>
+                        </div>
+                        <div class="col-lg-4">                
+                            <label id="staffLabel" for="staff" class="restricted-disable">Staff</label>
+                            <select id="staff" name="staff" class="form-control restricted-disable required">
+                                <option value=""></option>"
+                            </select>
+                        </div>                                
+                    </div>
+                </div>
+            </div>
+            <div class="row d-flex flex-column w-100 mt-3">
+                <div class="col-12 border boxShadow">
+                    <span class="d-flex w-100 justify-content-between">
+                        <h5>Lost your receipt? You can add an entry manually</h5>
+                        <button id="ShowFormButton" class="btn btn-outline-primary">Show form</button>                            
+                    </span>
+                    <div class="row w-100 d-flex mt-3">
+                        <div class="col-12 d-flex restricted-disable justify-content-center" id="insertForm">  
+                            <form id="addReceipt">
+                                <div class="row w-100 g-4 d-flex">
+                                    <input id="id" name="id" class="restricted-disable"/>
+                                    <div class="col-lg-4">                
+                                        <label for="date" class="required">Date</label>
+                                        <input type="date" id="date" name="date" class="form-control"/>
+                                    </div>
+                                    <div class="col-lg-4">  
+                                        <label for="amount" class="required">Amount (inc VAT)</label>
+                                        <input id="amount" name="amount" class="form-control"/>
+                                    </div>
+                                    <div class="col-lg-4">  
+                                        <label for="vat" class="required">VAT</label>
+                                        <input id="vat" maxlength="10" size="8" name="vat" class="form-control"/>
+                                    </div>
+                                    
+                                </div>
+                                <div class="row w-100 g-4 d-flex">
+                                    <div class="col-lg-4">  
+                                        <label for="currency" class="required">Currency</label>
+                                        <select id="currency" maxlength="10" size="1" name="currency" class="form-control">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">  
+                                        <label for="category">Category</label>
+                                        <select id="category" maxlength="10" size="1" name="category" class="form-control">
+                                            <option value=""></option>
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-4">  
+                                        <label for="supplier">Supplier</label>
+                                        <input type="text" id="supplier" maxlength="10" size="8" name="supplier" class="form-control">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row w-100 d-flex mt-3">
+                                    <div class="col-4">
+                                        <label for="comment">Comment</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text" name="comment" id="comment" class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="row w-100 d-flex mt-3">
+                                    <div class="col-12 d-flex justify-content-center">
+                                        <button type="submit" class="btn btn-outline-primary">Submit</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                    
+            
+    
+                    
+            <div class="row w-100 mt-3">
+                <div class="col-12 d-flex flex-column border boxShadow align-items-center">
+                    <h5>Move your files into the box</h5>
+                    <div class="border" id="dropzone" style="width: 60%; height: 20vh;">
+                        <input type="file" accept=".jpg, .pdf, .gif, .png" hidden>
+                    </div>
+                    <div class="row w-100">
+                        <div class="col-5"><hr></div>
+                        <div class="col-2 d-flex justify-content-center"><h5>OR</h5></div>
+                        <div class="col-5"><hr></div>
+                    </div>
+                    <div class="row w-100 d-flex justify-content-center">
+                        <div class="col-5">
+                            <form>
+                                <label for="fileInput" class="">Select manually</label>
+                                <input id="fileInput" name="fileInput" class="" type="file" accept=".jpg, .png, .gif, .pdf" multiple/>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="row w-100"><div class="col-12"><hr></div></div>
+                    
+                    <div class="row w-100 d-flex justify-content-center" id="chosenFiles">
+                        <div class="col-10 d-flex flex-column align-items-center">                            
+                            <h5>Selected Files</h5>
+                            <ul class = "mt-2" id="fileList"></ul>
+                            <button id="submitFiles" type="submit" class="w-75 btn btn-primary restricted-disable">Process Files</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>

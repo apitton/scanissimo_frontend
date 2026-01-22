@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="row d-flex w-100">
+        <div class="col-6 d-flex justify-content-between">
+            <label for="organisation_name">Name of organisation</label>
+            <input id="organisation_name" name="organisation_name" class="input-plain" length="20">
+        </div>
+        <div class="col-6">
+            <button id="changeOrgName" class="settingsButon btn btn-outline-primary">Change name</button>
+            <button class="settingsButon btn btn-outline-primary restricted-disable">Validate</button>
+        </div>
+    </div>
+    <div class="row d-flex w-100"><div class="col-12"><hr></div></div>
+    <div class="row d-flex w-100 mt-3">
+        <div class="col-12 d-flex flex-column">
+            <form id="addStaff">
+                <div class="row d-flex w-100">
+                    <div class="col-6 d-flex justify-content-between">
+                        <label for="new_staff_first_name" class="required">First Name</label>
+                        <input id="new_staff_first_name" name="new_staff_first_name" length="20">
+                    </div>
+                    <div class="col-6 d-flex justify-content-between">
+                        <label for="new_staff_last_name" class="required">Last Name</label>
+                        <input id="new_staff_last_name" name="new_staff_last_name" length="20">    
+                    </div>
+                </div>
+                <div class="row d-flex w-100 mt-2">
+                    <div class="col-6 d-flex justify-content-between">
+                        <label for="new_staff_email" class="required">Email</label>
+                        <input id="new_staff_email" name="new_staff_email" length="20">    
+                    </div>
+                    <div class="col-6 d-flex justify-content-between">
+                        <span><input type="checkbox" id="is_manager" name="is_manager" value="is_manager">&nbsp;<label for="is_manager">Manager</label></span>
+                        <span><input type="checkbox" id="is_admin" name="is_admin" value="is_admin">&nbsp;<label for="is_admin">Admin</label></span>
+                    </div>
+                    
+                </div>
+                <div class="row d-flex w-100 mt-2">
+                    <div class="col-12 d-flex justify-content-center">
+                        <button type="submit" class="settingsButton btn btn-outline-primary">Add staff</button>                        
+                    </div>
+                </div>                                
+            </form>
+        </div>
+    </div>
+    <div class="row d-flex w-100"><div class="col-12"><hr></div></div>
+    <div class="row d-flex w-100 mt-3">
+        <div class="col-12 d-flex justify-content-between">
+            <button id="listViewButton" class="btn btn-outline-primary settingsButton">List view</button>&nbsp;
+            <button id="teamsButton" class="btn btn-outline-primary settingsButton">Team view</button>&nbsp
+            <button id="manageTeamsButton" class="btn btn-outline-primary settingsButton">Manage team</button>
+        </div>
+    </div>
+    <div class="row d-flex w-100 mt-3">
+        <div class="col-12 d-flex flex-column" id="listView">            
+            <table id="list">
+                <thead>
+                    <tr>
+                        <td><strong>First Name</strong></td>
+                        <td><strong>Last Name</strong></td>
+                        <td><strong>Manager</strong></td>
+                        <td><strong>Admin</strong></td>
+                        <td> </td>
+                        <td> </td>
+                    </tr>
+                </thead>
+                <tbody id="usersBody">
+                </tbody>
+            </table>
+        </div>    
+        <div class="col-12 d-flex flex-column restricted-disable" id="teams">                        
+        </div>
+        <div class="col-12 d-flex flex-column restricted-disable" id="manageTeams">    
+            <div class="row d-flex w-100">
+                <div class="col-6 d-flex justify-content-between align-items-start">
+                    <label for="selectManager">Select manager</label>
+                    <select id="selectManager" name="selectManager" class="input">
+                        <option value=""></option>
+                    </select>
+                </div>
+                <div class="col-6 d-flex flex-column">
+                    <span class="d-flex justify-content-between align-items-start">                        
+                        <select id="selectNewStaff" name="selectNewStaff" class="input">
+                            <option value="" size="20"></option>
+                        </select>
+                        <button type="button" class="btn btn-outline-primary smallButton" id="addToTeam">Add</button>
+                    </span>
+                    <span class="d-flex justify-content-between mt-2">                        
+                        <select id="selectExistingStaff" name="selectExistingStaff" class="input">
+                            <option value="" size="20"></option>
+                        </select>
+                        <button type="button" class="btn btn-outline-primary smallButton" id="removeFromTeam">Remove</button>
+                    </span>
+                </div>                
+            </div>
+            
+        </div>
+    </div>
+
+</div>

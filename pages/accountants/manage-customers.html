@@ -1,0 +1,58 @@
+<div class="container">
+    <div class="row d-flex w-100">
+        <div class="col-12 d-flex flex-column">
+            <form id="inviteCustomer">
+                <div class="row d-flex w-100">
+                    <div class="row">
+                        <div class="col-12">
+                            <h5>Invite new customers</h5>
+                            <p>&#x26A0; Only invite customers you know and who are expecting your invitation. Please do not use our services for unrequested sollicitations.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row d-flex w-100">
+                    <div class="col-6 d-flex justify-content-between">
+                        <label for="first_name" class="required">First Name</label>
+                        <input id="first_name" name="first_name" type="text" size="20" placeholder="First Name"/>
+                    </div>
+                    <div class="col-6 d-flex justify-content-between">
+                        <label for="last_name" class="required">Last Name</label>
+                        <input id="last_name" name="last_name" type="text" size="20" placeholder="Last Name"/>
+                    </div>
+                </div>
+                <div class="row d-flex w-100 mt-2">
+                    <div class="col-6 d-flex justify-content-between">
+                        <label for="email" class="required">Email</label>
+                        <input id="email" name="email" type="email" size="20" placeholder="Email"/>
+                    </div>                                    
+                    <div class="col-6 d-flex justify-content-end">
+                        <button class="btn btn-outline-primary" type="submit">Send invitation</button>&nbsp;
+                        <button class="btn btn-outline-secondary" type="reset">Reset form</button>
+                    </div>                    
+                </div>              
+                <div class="row d-flex w-100 mt-2">
+                    <div class="col-12 d-flex justify-content-center">
+                        <span>
+                            
+                        </span>
+                    </div>
+                  
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="row d-flex w-100 mt-3"><div class="col-12"><hr></div></div>
+    <div class="row d-flex w-100">
+        <div class="col-6 d-flex flex-column">
+            <h5>Existing customers&nbsp;<span id="manager-60" class="material-symbols-outlined simpleLink refresh">change_circle</span></h5>
+            <ul id="existingCustomers"></ul>
+        </div>
+        <div class="col-6 d-flex flex-column">
+            <h5>Pending invitations sent&nbsp;<span id="manager-60" class="material-symbols-outlined simpleLink refresh">change_circle</span></h5>
+            <ul id="invitationsSent"></ul>
+            <h5>Pending invitations received&nbsp;<span id="manager-60" class="material-symbols-outlined simpleLink refresh">change_circle</span></h5>
+            <ul id="invitationsReceived"></ul>
+        </div>
+
+    </div>
+</div>

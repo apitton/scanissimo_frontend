@@ -1,0 +1,67 @@
+<!--<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+</div>
+<div class="modal-body invoice-modal-body" id="viewInvoicesModal">
+<div class="container">
+    <div class="row w-100">
+        <div class="col-12 d-flex flex-column justify-content-center align-items-center mt-2 border boxShadow">
+            <div class="row w-100 d-flex">
+                <div class="col-12 d-flex justify-content-center mt-2">
+                    <h4 class="modal-title">Invoice details</h4>
+                </div>
+            </div>
+            <div class="row w-100 d-flex mt-3">
+                <div class="col-2 d-flex justify-content-start h-100 p-0">
+                    <nav class = "w-100 d-flex flex-column justify-content-start align-items-start">
+                        <ul class = "pagination d-flex flex-column w-100">
+                            <li class="page-item actionLink modalChoice w-100"><span id="showInvoiceDetails" class="pagination currentPagination actionLink w-100" data-link="invoiceDetails">Details</span></li>
+                            <li class="page-item actionLink modalChoice" ><span id="showItems" class="pagination actionLink" data-link="invoiceItems">Items</span></li>
+                            <li class="page-item actionLink modalChoice"><span id="showImage" class="pagination actionLink" data-link="invoiceImage">Image</span></li>
+                        </ul>
+                        <ul class = "pagination d-flex flex-column w-100" style="margin-top: auto;">
+                            <li class="page-item w-100" id="showImage"><button id="genLinkModal" class="btn btn-primary d-flex justify-content-center w-100" type="button" title="Generate link"><i class="bi bi-link-45deg"></i></button></li>
+                            <li class="page-item"><button id="downloadModal" class="btn btn-primary d-flex justify-content-center w-100 mt-2" type="button" title="Download"><i class="bi bi-cloud-download"></i></button></li>
+                            <li class="page-item"><button id="deleteModal" class="btn btn-primary d-block justify-content-center w-100 mt-2" type="button" title="Delete"><i class="bi bi-trash3"></i></button></li>
+                            <li class="page-item"><button id="editModal" class="btn btn-primary d-block justify-content-center w-100 mt-2" type="button" title="Delete">Edit</button></li>
+                        </ul>                        
+                    </nav>
+                </div>
+                <div class="col-10 d-flex flex-column h-100 overflow-y-scroll" >                    
+                    <div class="restricted-disable modalDisplay activeElement h-100 overflow-y-scroll" id="invoiceDetails">
+                        <table class="table table-striped overflow-y-scroll">
+                            <tr><th>Date</th><td><input id="receipt_date" class="input-plain" type="date" readonly/></td></tr>
+                            <tr><th>Amount</th><td><input id="receipt_amount" class="input-plain" type="text" readonly/></td></tr>                                                        
+                            <tr><th>VAT</th><td><input id="receipt_vat"class="input-plain" type="text" readonly/></td></tr>
+                            <tr><th>Amount ex VAT</th><td><input id="invoiceAmountExVat" class="input-plain" type="number" readonly/></td></tr>
+                            <tr><th>Currency</th><td><select id="receipt_currency" class="input-plain"><option id="receipt_currency_value" selected></option></option></select></td></tr>
+                            <tr><th>Supplier</th><td><input id="receipt_supplier" class="input-plain" type="text" readonly/></td></tr>                            
+                            <tr><th>Category</th><td><select id="receipt_category" class="input-plain"><option id="receipt_category_value" selected></option></select></td></tr>
+                            <tr><th>Added On</th><td><input id="added_on" class="input-plain" type="date" readonly/></td></tr>                            
+                            <tr><th>Validated by manager</th><td id="validated_by_manager"></td></tr>
+                            <tr><th>Validated by accountant</th><td id="validated_by_accountant"></td></tr>
+                            <tr><th>Comment</th><td><input id="comment" class="input-plain" type="text" readonly/></td></tr>
+                        </table>
+                    </div>
+                    <div class="restricted-disable modalDisplay h-100" id="invoiceItems"></div>
+                    <div class="restricted-disable modalDisplay h-100" id="invoiceImage"></div>
+                </div>
+            </div>
+            <div class="row w-100 d-flex mt-2">
+                <div class="col-12 d-flex justify-content-center">
+                    <div class="modal-footer">        
+                        <span id="modalInvoiceInfo" style="margin: auto;" data-bs-dismiss="modal"></span>
+                        <button id="modalInvoiceYes" type="button" class="modalInvoiceButton btn btn-primary restricted-disable">Yes</button>
+                        <button id="modalInvoiceNo" style="margin-right: auto;" type="button" class="modalInvoiceButton btn btn-secondary restricted-disable">No</button>
+                        <button id="modalInvoiceCancel" type="button" class="modalInvoiceButton btn btn-secondary restricted-disable">Cancel</button>
+                        <button id="modalInvoiceSave" style="margin-right: auto;" type="button" class="modalInvoiceButton btn btn-primary restricted-disable">Save changes</button>
+                        <button id = "modalInvoiceClose" type="button" class="btn btn-secondary restricted-disable" data-bs-dismiss="modal">Close</button>        
+                    </div>
+                </div>
+            </div>
+
+            
+
+
+        </div>
+    </div>
+</div>
+

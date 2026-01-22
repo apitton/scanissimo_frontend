@@ -1,0 +1,94 @@
+<div class="container h-100 w-100 d-flex flex-column align-items-center">
+
+    <div class="row w-100 mt-3 mb-3 d-flex justify-content-center">
+        <div class="col d-flex justify-content-center"><span class="link" data-link="/pages/dashboard.html"><button type="button" id="backToDashboard" class="btn btn-primary"><i class="bi bi-arrow-left-circle-fill"></i>&nbsp;Back to dashboard</button></span></div>
+        <div class="col d-flex justify-content-center"><span class="link" data-link="/pages/statements/viewStatements.html"><button type="button" id="viewStatements" class="btn btn-primary"><i class="bi bi-cloud-upload"></i>&nbsp;Upload Receipt</button></span></div>
+    </div>
+
+    <div class="row w-100 g-3 justify-content-center">
+        <div class="col-12 w-100 justify-content-center border boxShadow p-2">
+            <form id="genForm" class="w-100">
+                <div class="row w-100 g-3 d-flex justify-content-center">
+                    <div class="col-lg-3">                
+                        <label for="dateFrom">Date From</label>
+                        <input type="date" id="dateFrom" name="dateFrom" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">  
+                        <label for="dateTo">Date To</label>
+                        <input type="date" id="dateTo" name="dateTo" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">  
+                        <label for="minAmount">Min Amount</label>
+                        <input type="text" id="minAmount" maxlength="10" size="8" name="minAmount" class="form-control"/>
+                    </div>
+                    <div class="col-lg-3">  
+                        <label for="maxAmount">Max Amount</label>
+                        <input type="text" id="maxAmount" maxlength="10" size="8" name="maxAmount" class="form-control"/>
+                    </div>
+                </div>
+                <div class="row w-100 g-3 d-flex">
+                    <div class="col-lg-3">    
+                        <label for="category">Category</label>                
+                        <select id="category" name="category" size="1" class="form-control">   
+                            <option value="" selected></option>                                     
+                        </select>
+                    </div>
+                    <div class="col-lg-3">                        
+                        <label for="currency">Currency</label>
+                        <select id="currency" name="currency" size="1" class="form-control">
+                            <option value="" selected></option>                            
+                        </select>
+                    </div>
+                    <div class="col-lg-3 restricted-disable" id="staffSelector">                        
+                        <label for="staff">Team member</label>
+                        <select id="staff" name="staff" size="1" class="form-control">
+                            <option value="" selected></option>                            
+                        </select>
+                    </div>
+                    <div class="col-lg-3 restricted-disable" id="clientSelector">                        
+                        <label for="client">Client</label>
+                        <select id="client" name="client" size="1" class="form-control">
+                            <option value="" selected></option>                            
+                        </select>
+                        <input id="viewMode" name="viewMode" class="restricted-disable" value="ind-self"/>
+                    </div>
+                </div>
+                <div class="row w-100"><div class="col-12 w-100"><hr></div></div>
+                <div class="row w-100 g-3 mt-2 d-flex justify-content-center">
+                    <div class="col-12 w-100 d-flex justify-content-center">                        
+                        <label for="format" class="required" id="formatQuestion" >Format</label>&nbsp;&nbsp;                                  
+                        <span><input type="radio" id="xlsx"  name="format"   value="xlsx" />
+                            <label  for="xlsx">&nbsp;Excel (.xlsx)</label></span>&nbsp;&nbsp;
+                        <span><input type="radio" id="csv"  name="format"   value="csv" />
+                            <label  for="csv">&nbsp;Excel (.csv)</label></span>&nbsp;&nbsp;
+                        <span><input type="radio" id="pdf"  name="format" value="pdf" />
+                            <label  for="pdf">&nbsp;PDF</label></span>
+                    </div>
+                </div>
+                <div class="row w-100"><div class="col-12 w-100"><hr></div></div>
+                <div class="row w-100 g-3 d-flex justify-content-center">
+                    <button type="submit" class="w-75 m-2 btn btn-primary d-block mx-auto"><i class="bi bi-search"></i> Generate Statement</button>
+                </div>
+                <input type="text" class="restricted-disable" name="userId" id="userId"/>
+                <input type="text" class="restricted-disable" name="userEmail" id="userEmail"/>            
+            </form>
+        
+        </div>
+        <div class="col-12 w-100 justify-content-center border boxShadow p-2 mt-3">
+            <div class="row w-100 d-flex justify-content-start gy-3">
+                <div class="col-12">
+                    <ul id="statements" class = "noListStyleType">
+
+                    </ul>
+
+                </div>
+
+                <!-- <div class="col-6">
+                    <button class="btn btn-primary w-75" id="statementDownload">Download</button>&nbsp;
+                    <button class="btn btn-primary w-75" id="statementEmail">Email</button>&nbsp;
+                    <button class="btn btn-primary w-75" id="statementDelete">Delete</button>&nbsp;
+                </div> -->
+            </div>
+        </div>
+    </div>
+</div>

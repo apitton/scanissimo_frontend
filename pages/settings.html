@@ -1,0 +1,356 @@
+<div class="container-flex w-100 h-100 p-0">
+    <div class="row w-100 h-100 p-0">
+        <div class="col-2 h-100 border-right d-flex flex-column p-4">
+            <nav class="d-flex justify-content-start">
+                <ul id="navLinks" class="d-flex flex-column justify-content-start align-items-start">
+                    <li class="actionLink blue noListType active" data-link="details">Your details</li>
+                    <li class="actionLink blue noListType" data-link="preferences">Preferences</li>
+                    <li class="actionLink blue noListType" data-link="accountant">Accountant</li>
+                    <li id="cat" class="actionLink blue noListType noNav restricted-disable" data-link="categories-sub">Categories</li>
+                    <ul id="categories-sub" class="subMenu restricted-disable">
+                        <li class="actionLink blue noListType" data-link="categories">Categories</li>
+                        <li class="actionLink blue noListType" data-link="category_mapping">Mapping</li>
+                    </ul>                    
+                    <li class="actionLink blue noListType restricted-disable" data-link="team">Your team</li>
+                    <li class="actionLink blue noListType" data-link="subscription">Subscription</li>
+                    <li class="actionLink blue noListType" data-link="security">Security</li>
+                </ul>
+            </nav>
+
+        </div>
+        <div class="col-10 p-4">
+            <div class="row w-100 content w-100 activeSection" id="details">
+                <div class = "col-12">
+                    <form id="detailsForm" class="d-flex flex-column justify-content-center align-items-start w-100">
+                        <div class="row mt-2 w-100 d-flex restricted-disable" id="org_row">
+                            <div class="col-6 d-flex justify-content-between">
+                                <label for="org_name"><strong>Organisation</strong></label><input length="30" id="org_name" name="org_name" class="input-plain" readonly>
+                            </div>
+                            <div class="col-6 d-flex justify-content-between">
+                                <label for="org_role"><strong>Role</strong></label><input length="30" id="org_role" name="org_role" class="input-plain" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2 w-100 d-flex">
+                            <div class="col-6 d-flex justify-content-between">
+                                <label for="first_name"><strong>First Name</strong></label><input length="30" id="first_name" name="first_name" class="input-plain field" readonly>                        
+                            </div>
+                            <div class="col-6 d-flex justify-content-between">
+                                <label for="last_name"><strong>Last Name</strong></label><input length="30" id="last_name" name="last_name" class="input-plain field" readonly>
+                            </div>
+                        </div>
+                        <div class="row mt-2 d-flex w-100">
+                            <div class="col-12 mt-2 w-100 d-flex justify-content-center">
+                                <button type="button" id="editDetails" class = "btn btn-outline-primary w-50 mt-3 settingsButton">Edit</button>
+                                <button type="button" id="submitDetailsForm" class="btn btn-outline-primary mt-3 restricted-disable settingsButton">Submit</button>&nbsp;
+                                <button type="button" id="cancelDetailsForm" class="btn btn-outline-secondary mt-3 restricted-disable settingsButton">Cancel</button>
+                            </div>
+                        </div> 
+                        <div class="row mt-2 w-100"><div class="col-12"><hr></div></div>
+                        <div class="row mt-2 d-flex w-100">
+                            <div class="col-3 d-flex justify-content-between align-items-center">                                
+                                <label for="phone_nb"><strong>Mobile phone</strong></label>
+                            </div>
+                            <div class="col-3 d-flex justify-content-between align-items-center">                                
+                                <input type="phone" length="20" id="phone_nb" name="phone_nb" class="input-plain field" readonly>
+                            </div>                        
+                            <div class="col-6 d-flex justify-content-between">
+                                <button type="button" id="editPhone" class="btn btn-outline-primary settingsButton">Edit</button>
+                                <button type="button" id="submitPhone" class="btn btn-outline-primary restricted-disable settingsButton">Submit</button>
+                                <button type="button" id="cancelPhone" class="btn btn-outline-secondary restricted-disable settingsButton">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="row mt-2 d-flex w-100">
+                            <div class="col-12">
+                                <span id="valid-msg" class="restricted-disable"></span><span id="error-msg" class="restricted-disable"></span>
+                            </div>
+                        </div>
+                        <div class="row mt-2 w-100 restricted-disable" id="phoneCodeRowExplain">
+                            <div class="col-12 w-100" id="phoneCodeRowExplain">
+                                <p>We sent a verification code to your phone. Please enter the code below</p>
+                            </div>
+                        </div>
+                        <div class="row mt-2 w-100 restricted-disable" id="phoneCodeRow">
+                            <div class="col-12 w-100 d-flex justify-content-start">
+                                <input class="input-plain" size="30" value="Mobile Number verification code">
+                                <input name="phoneCode" type="text" inputmode="numeric" pattern="\d{6}" maxlength="6" id="phoneCode" size="30" class="verificationInput">&nbsp;&nbsp;
+                                <button class="missingButton btn btn-outline-primary settingsButton" id="resend_phone" >Resend Code</button>&nbsp;
+                                <button class="missingButton btn btn-outline-primary settingsButton" id="verify_phone" >Verify</button>
+                                <span class="restricted-disable text-success" id="phoneSuccess">Mobile number verified successfully</span>
+                            </div>
+                        </div>
+                        <div class = "mt-2 w-100"><hr></div>
+                        <div class="row mt-2 d-flex w-100">
+                            <div class="col-6 d-flex justify-content-between">                            
+                                <label for="email"><strong>Email</strong></label><input length="30" id="email" name="email" class="input-plain field" readonly>
+                            </div>
+                            <div class="col-6 d-flex justify-content-between">                            
+                                <button type="button" id="editMail" class="btn btn-outline-primary settingsButton">Edit</button>
+                                <button type="button" id="submitMail" class="btn btn-outline-primary restricted-disable settingsButton">Submit</button>
+                                <button type="button" id="cancelMail" class="btn btn-outline-secondary restricted-disable settingsButton">Cancel</button>
+                            </div>
+                        </div>
+                        <div class="row mt-3 w-100 missingInputField restricted-disable" id="emailCodeRowExplain">
+                            <div class="col-12 w-100 d-flex justify-content-start">
+                                <p>We sent a verification code to your inbox. Please enter the code below</p>
+                            </div>
+                        </div>
+                        <div class="row mt-2 w-100 missingInputField restricted-disable" id="emailVerifRow">
+                            <div class="col-12 w-100 d-flex justify-content-start">
+                                <input class="input-plain" size="30" value="email verification code">
+                                <input name="emailCode" type="text" inputmode="numeric" pattern="\d{6}" maxlength="6" id="emailCode" size="30" class="verificationInput">&nbsp;&nbsp;
+                                <button class="missingButton"  id="resend_email" >Resend</button>&nbsp;
+                                <button class="missingButton"  id="verify_email" >Verify</button>
+                                <span id="verifyConfirm_email"></span>
+                            </div>
+                        </div>
+                        <span id="infoDetails" class="restricted-disable"></span>
+
+                    </form>
+                </div>
+            </div>
+            <div class="content restricted-disable" id="preferences">
+                <div class="row w-100"><div class="col-12 d-flex justify-content-center"><h5>Communication Preferences</h5></div></div>
+                <div class="row mt-2 w-100 d-flex">
+                    <div class="col-6 d-flex justify-content-start align-items-center">
+                        <input type="checkbox" id="offers" name="offers" class="">&nbsp;<label class="d-flex align-items-center" for="offers">Update me about offers</label>
+                    </div>
+                    <div class="col-6 d-flex justify-content-between">
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="content restricted-disable" id="accountant">
+                <div class="row w-100">
+                    <div class="col-12">
+                        <div class="row w-100 d-flex align-items-start">
+                            <div class="col-6">
+                                <p id="accountantInfo"></p>
+                            </div>
+                            <div class="col-6 d-flex gap-2 justify-content-end">
+                                    <button type="button" class="btn btn-outline-primary smallButton restricted-disable" id="cancelInviteAccountantButton">Cancel</button>&nbsp;
+                                    <button type="button" class="btn btn-outline-primary smallButton restricted-disable" id="resendInviteAccountantButton">Resend </button>
+                                    <button type="button" class="btn btn-outline-primary smallButton restricted-disable" id="inviteAccountantButton">Invite</button>                                   
+                                    <button type="button" class="btn btn-outline-primary smallButton restricted-disable" id="revoke">Revoke</button>                                   
+                            </div>
+                        </div>
+                
+                        <div class="restricted-disable mt-3" id="inviteAccountant">
+               
+                            <form id="newAccountantForm">
+                                <div class="row d-flex w-100 mt-3">
+                                    <div class="col-6 d-flex justify-content-between">
+                                        <label for="acc_first_name" class="required" >First Name</label>
+                                        <input id="acc_first_name" name="acc_first_name" length="20">
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-between">
+                                        <label for="acc_last_name" class="required" >Last Name</label>
+                                        <input id="acc_last_name" name="acc_last_name" length="20">
+                                        <input id="client_organisation" name="organisation" class="restricted-disable" length="20">
+                                    </div>
+                                </div>
+                                <div class="row d-flex w-100 mt-3">
+                                    <div class="col-6 d-flex justify-content-between">
+                                        <label for="acc_firm">Name of firm</label>
+                                        <input id="acc_firm" name="acc_firm" length="20">
+                                    </div>
+                                    <div class="col-6 d-flex justify-content-between">
+                                        <label for="acc_email">E-mail</label>
+                                        <input id="acc_email" name="acc_email" class="required" length="20">
+                                    </div>
+                                </div>
+                                <div class="row d-flex w-100 mt-3">
+                                    <div class="col-3 offset-3 d-flex justify-content-start">
+                                        <button type="button" id="submitAccountant" class="btn btn-outline-primary settingsButon">Send invitation</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                      
+                    
+                    </div>
+                    <div class="row d-flex w-100"><div class="col-12"><hr></div></div>
+                    <div class="row d-flex w-100">
+                        <div class="col-12" id="invitationsReceived" class="restricted-disable">
+                            <h5>Invitations received</h5>
+                            <div id = "warningNewAccountant">
+                                <p>&#x26A0; Only accept an invitation if you know the accountant and where expecting to receive it.</p>
+                                <p>&#x26A0; Please note that accepting the invitation will disable any invitation to other accountants that you may have sent.</p>
+                            </div>
+                            <ul id="invitesFromAcc">                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="content restricted-disable" id="categories">
+                <div class="row d-flex w-100">
+                    <div class="col-6 d-flex">
+                        <h5 id = catStatus></h5>
+                    </div>
+                    <div class="col-6 d-flex">
+                        <button id = "catButton" class="btn btn-outline-primary settingsButton"></button>
+                    </div>
+                </div>
+                <div class="row d-flex w-100 mt-3">
+                    <div id = "defaultCategories" class="col-6 d-flex flex-column">
+                        <h5>Default Categories</h5>
+                        <ul id="defaultCatList">
+
+                        </ul>
+                    </div>
+                    <div id = "customCategories" class="col-6 d-flex flex-column">
+                        <h5>Your existing custom categories</h5>
+                        <ul class="restricted-disable" id="customCatForm">                            
+                            <li class="noListType" id="customCatForm1">
+                                <input type='text' length="20" id="newCustomCategory">&nbsp;<button id = "addCategory" class="btn btn-outline-primary">Add new</button>
+                            </li>
+                            <li class="noListType" id="customCatForm2">
+                                <input type="checkBox" id="fallback">&nbsp;<label for="fallback">&nbsp;Make fallback category?</label>
+                            </li>
+                        </ul>
+                        <ul>
+                            <li class="d-flex w-100 justify-content-between">
+                                <span><strong>Category name</strong></span><span><strong>Fallback</strong></span>
+                            </li>
+                        </ul>
+                        <ul id="customCatList">
+                        </ul>
+                        <ul id="customCatButtons" class="restricted-disable">
+                            <li class="noListType d-flex justify-content-end" id="customCatForm3">
+                                <button id = "saveFallback" class="btn btn-outline-primary">Save</button>&nbsp;<button id = "cancelFallback" class="btn btn-outline-secondary">Cancel</button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content restricted-disable" id="category_mapping">
+                <h5>category mapping</h5>
+                <div class="row w-100">
+                    <div class="col-12">
+                        <div class="accordion accordion-flush" id="categoriesUsed">
+                            <!-- <div class="accordion-item">
+                                <h5 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                                    Accordion Item #1
+                                </button>
+                                </h5>
+                                <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#categoriesUsed">
+                                <div class="accordion-body">Placeholder content for this accordion, which is intended to demonstrate the <code>.accordion-flush</code> class. This is the first item’s accordion body.</div>
+                                </div>
+                            </div> -->
+                        </div>                      
+                    </div>
+                    <div class="col-10">
+                        <ul id="suppliers">
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="content restricted-disable" id="subscription">
+                <div class="row d-flex w-100">
+                    <div class="col-6 d-flex">
+                        <span id="subscriptionDetails"></span>
+                    </div>
+                    <div class="col-6 d-flex align-items-start">
+                        <form id="subscribe" class="restricted-disable">
+                            <input type="hidden" name="lookup_key" value="scanissimo_monthly_basic" />
+                            <button type="submit" class="settingsButton btn btn-outline-primary">Subscribe</button>
+                        </form>
+                        <button type="button" id="canelSubscription" class="settingsButton btn btn-outline-primary restricted-disable">Cancel subscription</button>
+                        <button type="button" class="settingsButton btn btn-outline-primary restricted-disable" id="cancelSubscription">Cancel Subscription</button>
+                    </div>
+                </div>
+            </div>
+            <div class="content restricted-disable" id="security">
+                <div class="row d-flex w-100">
+                    <div class="col-6 d-flex">
+                        <label>Update Password</label>
+                    </div>
+                    <div class="col-6">
+                        <button id="updatePassword" class="btn btn-outline-primary settingsButton">Update password</button>
+                    </div>
+                </div>
+                <div id="newPasswordRow" class="restricted-disable p-0 m-0">
+                    <form id="newPasswordForm">
+                        <div class="row w-100 d-flex mt-3">
+                            <div class="col-6 d-flex justify-content-between">
+                                <label for="verifyPassword">Old Password</label><input type="password" id="verifyPassword" length="30">
+                            </div>
+                            <div class="col-6 d-flex justify-content-between">
+                                <span id="verifyPassword_comment"></span>
+                            </div>
+                        </div>
+                        <div class="row w-100 d-flex mt-3">
+                            <div class="col-6 d-flex justify-content-between">
+                                <label for="newPassword">New Password</label><input type="password" id="newPassword" length="30">
+                            </div>
+                    
+                            <div class="col-6 d-flex justify-content-between">
+                                <label for="checkNewPassword">Verify New Password</label><input type="password" id="checkNewPassword" length="30">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="row w-100 d-flex mt-3">
+                        <div class="col-6 d-flex justify-content-between">
+                            <span id="newPassword_comment"></span>
+                        </div>
+                
+                        <div class="col-6 d-flex justify-content-between">
+                            <span id="checkNewPassword_comment"></span>
+                        </div>
+                    </div>
+
+                    <div class="row w-100 d-flex mt-3">
+                        <div class="col-12 d-flex justify-content-center">
+                            <span>Passwords must have min 8 characters, including at least one special character, and one capital letter.</span>
+                        
+                            
+                        </div>
+                    </div>
+
+
+                    <div class="row w-100 d-flex mt-3">
+                        <div class="col-4 offset-3 d-flex justify-content-around">
+                            <button id="submitPassword" type="button" class="btn btn-outline-primary disabled">Submit</button>
+                            <button id="cancelPassword" type="button" class="btn btn-outline-secondary">Cancel</button>
+                        </div>
+                    </div>                
+                </div>
+
+                <div class="row d-flex w-100 mt-3"><div class="col-12"><hr></div></div>
+
+                <div class="row w-100 mt-3">
+                    <div class="col-6">
+                        <label>Multi Factor Authentification</label>
+                    </div>
+                    <div class="col-6">
+                        <span id="mfa"></span>
+                        <button id="changeMfa" class="btn btn-outline-primary settingsButton">Change</button>
+                    </div>
+                </div>
+                <div class="row w-100 restricted-disable" id="mfaRow">
+                    <div class="col-12">
+                        <form id="mfaForm">                
+                            <div class="row w-100">
+                                <div class="col-12 w-100 d-flex flex-column align-items-center mt-3">
+                                    <h5>Please scan the qr code with your authenticator app</h5>
+                                    <label for="verifCode">Verification Code:</label>
+                                    <input id="verifCode" pattern="\d{6}" maxlength="6" name="verifCode" class="verificationInput" length="6">
+                                    <img id="qrCode"/>
+                                    <p>Or copy/paste into your app:</p>
+                                    <div>
+                                        <input type="text" size="30" readonly id="authCode"/>
+                                        <button class="btn-outline-secondary blue" type="button" id="authCodeCopy"><i class="bi bi-copy actionLink" title="Copy code"></i></span>&nbsp;                                                
+                                    </div>
+                                    <button type="submit" id="mfaSubmit" class = "mt-2 btn btn-primary disabled">Submit</button>
+                                    <span id="verifCodeMessage" class="mt-2 restricted-disable text-danger">Code invalid</span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

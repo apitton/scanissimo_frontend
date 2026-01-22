@@ -1,0 +1,22 @@
+<div class="container">
+    <div class="row d-flex w-100 restricted-disable" id="noUser">
+        <div class="col-12 d-flex justify-content-center">
+            <h5>Thanks for following the link. Please click the button below to be redirected to our signup page.</h5>
+            <p class="mt-3">Once your profile is created, you can accept the invitation by navigating to the settings section or by clicking on the link again once you are logged in.</p>
+            <p class="mt-3">&#x26A0;&nbsp;Please sign up with the same email as the one the invitation was sent to, or you will not be able to accept it.</p>
+            <button type="button" class="mt-3 btn btn-outline-secondary" id="redirectToSignup">Redirect to signup page</button>
+        </div>
+    </div>
+    <div class="row d-flex w-100 restricted-disable" id="userNotLoggedIn">
+        <div class="col-12 d-flex justify-content-center">
+            <h5>You need to be logged in in order to accept the invitation</h5>
+            <button type="button" class="mt-3 btn btn-outline-secondary" id="redirectToLogin" data-link="/pages/login.html">Redirect to login page</button>
+        </div>
+    </div>
+    <div class="row d-flex w-100 restricted-disable" id="userLoggedIn">
+        <div class="col-12 d-flex justify-content-center">
+            <h5 id="infoLoggedIn"></h5>
+            <button type="button" class="mt-3 btn btn-outline-secondary" id="redirectToDashboard" data-link="/pages/dashboard.html">Redirect to Dashboard</button>
+        </div>
+    </div>
+</div>
