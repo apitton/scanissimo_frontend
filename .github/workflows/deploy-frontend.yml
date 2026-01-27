@@ -24,6 +24,6 @@ jobs:
         with:
           args: --delete
         env:
-          AWS_S3_BUCKET: scanissimo-frontend-prod
+          AWS_S3_BUCKET: scanissimo-frontend
           AWS_REGION: eu-west-2
           SOURCE_DIR: .
