@@ -1,0 +1,12 @@
+.env
+venv/
+bot_instance/.venv/
+bot_instance/.env
+back-end-wa/.env
+back-end-wa/node_modules
+bot/.venv/
+frontend/node_modules/
+frontend/.env
+client_portal_wa_chatbot/login_portal/node_modules/
+client_portal_wa_chatbot/node_modules/
+node_modules/

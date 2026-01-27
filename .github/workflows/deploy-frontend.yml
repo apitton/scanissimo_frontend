@@ -17,7 +17,6 @@ jobs:
           node-version: 20
 
       - run: npm ci
-      - run: npm run build
 
       - name: Deploy to S3
         uses: jakejarvis/s3-sync-action@v0.5.1
