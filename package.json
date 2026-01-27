@@ -1,0 +1,20 @@
+{
+  "name": "public",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/apitton/scanissimo_frontend#readme",
+  "bugs": {
+    "url": "https://github.com/apitton/scanissimo_frontend/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/apitton/scanissimo_frontend.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
