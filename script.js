@@ -15,7 +15,9 @@ document.addEventListener('DOMContentLoaded',()=>{
   console.log(entries);
   document.getElementById('mainSection').dataset.data=entries;
   let location = window.location;
-  if (location.search('localhost')) {
+  let apiUrl;
+  console.log(location.host);
+  if (location.host.search('localhost')) {
     apiUrl = '';
   } else {
     apiUrl = 'https://smct2d7vjb.execute-api.eu-west-2.amazonaws.com/';
