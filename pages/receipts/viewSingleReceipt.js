@@ -10,7 +10,7 @@ async function fillData() {
     const receiptId = data.receiptId;
     console.log('data ',data);
     console.log('receipt id ',receiptId);
-    const reply = await fetch('db/getReceipt', {method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({receipt_id: receiptId})});    
+    const reply = await fetch(apiUrl+'db/getReceipt', {method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({receipt_id: receiptId})});    
     const row = await reply.json();
     if (row.error) {
         document.getElementById('mainSection').innerHTML = '';
@@ -37,7 +37,7 @@ async function fillData() {
         document.getElementById('invoiceAmountExVat').value=Math.round((row.receipt_amount - row.receipt_vat)*100)/100;
     }
     //filling up items section
-    fetch('db/getReceiptItems', {method: 'POST', headers: {'Content-Type':'Application/json'}, credentials: 'include', body: JSON.stringify({receipt_id: receiptId})})
+    fetch(apiUrl+'db/getReceiptItems', {method: 'POST', headers: {'Content-Type':'Application/json'}, credentials: 'include', body: JSON.stringify({receipt_id: receiptId})})
     .then((reply)=>reply.json())
     .then((result)=>{
         console.log('result ',result);
@@ -64,7 +64,7 @@ async function fillData() {
     //filling up the image
     const container=document.getElementById('invoiceImage');
     container.innerHTML = ""; // Clear previous content
-    fetch('db/getReceiptImg',{ method: 'POST', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({path: row.storage_path})})
+    fetch(apiUrl+'db/getReceiptImg',{ method: 'POST', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({path: row.storage_path})})
     .then((res)=> {
         if (!res.ok) console.log('file not found')
         const contentType=res.headers.get("Content-Type");

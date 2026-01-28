@@ -5,7 +5,7 @@ import { handleCheckoutSession } from "./subscription.js";
 export async function init() {
     console.log('settings');
     initializePhone('phone_nb');
-    const userDetailsRes = await fetch('/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}});
+    const userDetailsRes = await fetch(apiUrl+'/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}});
     const userDetails = await userDetailsRes.json();
     await initForm(userDetails);
     initButtons();
@@ -18,7 +18,7 @@ export async function init() {
 }
 
 async function getFullProfile() {
-    return fetch('/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
+    return fetch(apiUrl+'/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
     .then((reply)=>reply.json())
     .catch((err)=>{
         console.log('error ', err);
@@ -59,7 +59,7 @@ async function fillUserDetails(userDetails) {
     }
     if (userDetails.organisation_id) {
         document.getElementById('org_row').classList.remove('restricted-disable');
-        const orgNameRes = await fetch('/db/getOrganisation', { method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ org_id: userDetails.organisation_id})});
+        const orgNameRes = await fetch(apiUrl+'/db/getOrganisation', { method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ org_id: userDetails.organisation_id})});
         const orgName = await orgNameRes.json();
         document.getElementById('org_name').value = orgName.name || '';
         if (userDetails.is_org_admin) {
@@ -139,7 +139,7 @@ function restoreForm(fields, buttons) {    //edit, submit, cancel
 
 function handleSubmitDetails() {    
     const body = { first_name: document.getElementById('first_name').value, last_name: document.getElementById('last_name').value }    
-    return fetch('/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)})
+    return fetch(apiUrl+'/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)})
     .then((res)=>{
         if(res.ok) {
            popup('Details updated!') 
@@ -163,7 +163,7 @@ function handleEditPhone() {
 function handleSubmitPhone() {
     ['phoneCodeRowExplain','phoneCodeRow'].forEach((el)=>document.getElementById(el).classList.remove('restricted-disable'));
     const body = { phone_nb: document.querySelector('.iti__selected-dial-code').innerHTML.slice(1) + document.getElementById('phone_nb').value }
-    return fetch('/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)})
+    return fetch(apiUrl+'/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)})
     .then((res)=>{
         if(res.ok) {
            popup('Phone number updated! We just sent you a verification code.')
@@ -188,7 +188,7 @@ function handleEditMail() {
 function handleSubmitMail() {
     ['emailCodeRowExplain','emailVerifRow'].forEach((el)=>document.getElementById(el).classList.remove('restricted-disable'));
     const body = { email: document.getElementById('email').value }
-    return fetch('/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)})
+    return fetch(apiUrl+'/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(body)})
     .then((res)=>{
         if(res.ok) {
            popup('Email updated! We just sent you a verification code.')
@@ -205,7 +205,7 @@ function handleVerifCode(e) {
     const type=e.target.id.split('_')[1];
     console.log('type ', type,'e.target.id ', e.target.id)
     const code=document.getElementById(`${type}Code`).value;
-    return fetch('db/checkVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify({type: type, code: code})})
+    return fetch(apiUrl+'db/checkVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify({type: type, code: code})})
         .then((reply)=>reply.json())
         .then((response)=>{
             const target = document.getElementById(type);
@@ -239,7 +239,7 @@ function handleResendCode(e) {
         body.phone = document.querySelector('.iti__selected-dial-code').innerHTML='+' + value.slice(0,2);
     }
     console.log('body ',body);
-    fetch('db/resendVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify(body)})
+    fetch(apiUrl+'db/resendVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify(body)})
     .then((reply)=>reply.json())
     .then((response)=>{
         if (response.success) {
@@ -293,7 +293,7 @@ function handleUpdatePassword() {
 }
 
 function handleSubmitPassword() {    
-    return fetch('auth/changePassword', { method: 'PUT', credentials: 'include', headers: { 'Content-Type': 'application/json'}, body: new FormData(newPasswordForm) })
+    return fetch(apiUrl+'auth/changePassword', { method: 'PUT', credentials: 'include', headers: { 'Content-Type': 'application/json'}, body: new FormData(newPasswordForm) })
     .then((reply)=> reply.json().then((response)=>({ reply, response })))
     .then(({ reply, response })=>{
         if (!reply.ok) {
@@ -309,7 +309,7 @@ async function handleMfa() {
     const status = document.getElementById('changeMfa').innerHTML;
     if (status=="Disable MFA") {
         //disable, create route
-        const reply = await fetch('auth/disableMfa', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'} });
+        const reply = await fetch(apiUrl+'auth/disableMfa', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'} });
         const response = await reply.json();
         if (response.success) {
             popup('MFA disable successfully!');
@@ -318,7 +318,7 @@ async function handleMfa() {
             popup('Problem disabling MFA ' + response.error);
         } 
     } else {
-        const reply = await fetch('auth/generateMfa', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
+        const reply = await fetch(apiUrl+'auth/generateMfa', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
         const qrCode = await reply.json();
         console.log('qr code', qrCode)
         if (!reply.ok) {
@@ -350,7 +350,7 @@ async function handleMfa() {
 export function handleMfaSubmit(e) {
     e.preventDefault();
     const code = document.getElementById('verifCode').value;
-    fetch('auth/validateMfa', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({code: code})})
+    fetch(apiUrl+'auth/validateMfa', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({code: code})})
     .then((response)=>{
         if (response.ok) {
             popup('Verification successful')
@@ -377,7 +377,7 @@ async function initiateCategories(userDetails) {
         document.getElementById('categories').innerHTML = 'This section is reserved to admins.';
         return; }
     document.getElementById('cat').classList.remove('restricted-disable');
-    let reply = await fetch('db/getDefaultCategories', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
+    let reply = await fetch(apiUrl+'db/getDefaultCategories', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
     const defaultCategories = await reply.json();
     console.log('defaultCategories ', defaultCategories)
     const defaultCatList = defaultCategories.map((cat)=>(`
@@ -385,7 +385,7 @@ async function initiateCategories(userDetails) {
            <span>${cat.category}</span><span><strong>${cat.is_fallback?'fallback':''}</strong></span>
         </li>`)).join('');
     document.getElementById('defaultCatList').innerHTML=defaultCatList;
-    reply = await  fetch('db/getCustomCategories', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
+    reply = await  fetch(apiUrl+'db/getCustomCategories', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' }})
     const customCategories = await reply.json();
     const customCatList = customCategories.map((cat, index)=>(`
         <li class="noListType customCategory d-flex justify-content-between w-100">
@@ -418,7 +418,7 @@ async function initiateCategories(userDetails) {
 }
 
 function handleSwitchCategories() {
-    fetch('db/switchCatType', { method: 'PUT', credentials: 'include', headers: { 'Content-Type': 'application/json' }} )
+    fetch(apiUrl+'db/switchCatType', { method: 'PUT', credentials: 'include', headers: { 'Content-Type': 'application/json' }} )
     .then((reply)=>reply.json()).then((response)=>{
         if (response.success) {
             popup(`Preferences updated. You are now using ${response.newType?'custom':'default'} categories.`);
@@ -447,7 +447,7 @@ function handleSwitchCategories() {
 function handleAddCustomCategory() {
     const newCat = document.getElementById('newCustomCategory').value;
     const isFallback = document.getElementById('fallback').checked;
-    fetch('db/addCustomCategory', { method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({category: newCat, is_fallback: isFallback})})
+    fetch(apiUrl+'db/addCustomCategory', { method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({category: newCat, is_fallback: isFallback})})
     .then((reply)=> reply.json()).then((response)=>{
         if (response.success) {
             popup('new category added!');
@@ -468,7 +468,7 @@ function handleAddCustomCategory() {
 
 function handleChangeFallbackCategory() {
     const newFallback = document.querySelector('input[name="fallback"]:checked');
-    fetch('db/makeDefaultCategory', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ category: newFallback.value })})
+    fetch(apiUrl+'db/makeDefaultCategory', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ category: newFallback.value })})
     .then((reply)=>reply.json()).then((response)=>{
         if (response.success) {
             popup('new fallback category saved')
@@ -490,7 +490,7 @@ function handleDeleteCategory(e) {
     if (fallback == e.target.dataset.category) {
         popup('You cannot delete the fallback category. Please set another category as fallback before trying again.');
     } else {
-        return fetch('db/deleteCustomCategory', { method: 'DELETE', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ category: e.target.dataset.category })})
+        return fetch(apiUrl+'db/deleteCustomCategory', { method: 'DELETE', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({ category: e.target.dataset.category })})
         .then((reply)=>reply.json()).then((response)=>{
             if(response.success) {
                 popup('Category deleted!');
@@ -504,13 +504,13 @@ function handleDeleteCategory(e) {
 }
 
 async function initiateCategoryMapping(userDetails) {
-    let reply = await fetch('db/getClientCategories', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' } });
+    let reply = await fetch(apiUrl+'db/getClientCategories', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' } });
     const categories = await reply.json();
     if (userDetails.organisation_id && !userDetails.is_org_admin) {
         document.getElementById('categoriesUsed').innerHTML = 'Section restricted to admins';
         return; }
     
-    reply = await fetch('db/getCustomCategoriesMapping', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' } })
+    reply = await fetch(apiUrl+'db/getCustomCategoriesMapping', { method: 'GET', credentials: 'include', headers: { 'Content-Type': 'application/json' } })
     const mapping = await reply.json();
     console.log('mapping ', mapping);
     document.getElementById('categoriesUsed').innerHTML = categories.categories.map((cat)=>`
@@ -531,7 +531,7 @@ async function initiateCategoryMapping(userDetails) {
             const category = e.target.dataset.category;
             const supplier = document.getElementById(`addMapping-${category}`).value;
             const body = { category: category, supplier: supplier };
-            fetch('db/addCategoryMapping', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
+            fetch(apiUrl+'db/addCategoryMapping', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) })
             .then((reply)=>reply.json()).then((response)=>{
                 if (response.success) {
                     popup('Supplier added!')
@@ -559,7 +559,7 @@ async function initiateCategoryMapping(userDetails) {
 
 function handleDeleteSupplier(e) {
     console.log('clicked');
-    return fetch('db/deleteCategoryMapping', { method: 'DELETE', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ supplier: e.target.dataset.supplier }) })
+    return fetch(apiUrl+'db/deleteCategoryMapping', { method: 'DELETE', credentials: 'include', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ supplier: e.target.dataset.supplier }) })
     .then((reply)=>reply.json()).then((response)=>{
         if(response.success) {
             popup('Supplier deleted!');
@@ -592,7 +592,7 @@ async function initiateAccountant(userDetails) {
         document.getElementById('accountantInfo').innerHTML=`You are part of ${capitalize(userDetails.org_name)}. ${userDetails.organisation_accountant_first_name?`Their accountant is ${capitalize(userDetails.organisation_accountant_first_name)} ${capitalize(capitalize(userDetails.organisation_accountant_last_name))} ${userDetails.organisation_accountant_name?` from ${capitalize(userDetails.organisation_accountant_name)}`:''}`:' There is currently no accountant for this organisation.'}`;
         return;
     }        
-    const accRes = await fetch('/db/checkAccountantforClient', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} });
+    const accRes = await fetch(apiUrl+'/db/checkAccountantforClient', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} });
     const acc = await accRes.json();    
     if  (userDetails.is_org_admin) {
         if (acc.accountant) {
@@ -601,7 +601,7 @@ async function initiateAccountant(userDetails) {
             document.getElementById('revoke').classList.remove('restricted-disable');
         } else {
             document.getElementById('revoke').classList.add('restricted-disable');
-            const inviteRes = await fetch('auth/checkAccountantInvite', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
+            const inviteRes = await fetch(apiUrl+'auth/checkAccountantInvite', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
             const invite = await inviteRes.json();
             if (invite.invite) {
                 document.getElementById('accountantInfo').innerHTML=`You invited ${capitalize(invite.acc_first_name)} ${capitalize(invite.acc_last_name)} ${invite.accountant_name?` from ${capitalize(invite.accountant_name)}`:''} to be your organisation's accountant on the ${getDate(invite.invite_date)}.<br>They have not accepted yet.<br><span class="text-decoration-underline">The link will expire 30 days after the invitation date.</span>`
@@ -621,7 +621,7 @@ async function initiateAccountant(userDetails) {
     } else {
         //check if an invitation was sent
         document.getElementById('revoke').classList.add('restricted-disable');
-        const inviteRes = await fetch('auth/checkAccountantInvite', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
+        const inviteRes = await fetch(apiUrl+'auth/checkAccountantInvite', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
         const invite = await inviteRes.json();
         if (invite.invite) {
             inviteSent=true;
@@ -645,7 +645,7 @@ async function initiateAccountant(userDetails) {
     })
     document.getElementById('resendInviteAccountantButton').addEventListener('click',handleResendInviteAccountant)
     document.getElementById('revoke').addEventListener('click', handleRevokeAccountant);
-    const invitesReceivedRes = await fetch('/db/accountantInvitesReceived', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}});
+    const invitesReceivedRes = await fetch(apiUrl+'/db/accountantInvitesReceived', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}});
     const invitesReceived = await invitesReceivedRes.json();
     if (invitesReceived.length) {
         document.getElementById('invitationsReceived').classList.remove('restricted-disable');
@@ -664,10 +664,10 @@ async function initiateAccountant(userDetails) {
 
 }
 async function acceptAccInvite(e) {
-    const res = await fetch('/db/acceptAccInvite', {method: 'POST', headers: {'Content-Type':'Application/json'}, credentials: 'include', body: JSON.stringify({code: e.target.dataset.code})});
+    const res = await fetch(apiUrl+'/db/acceptAccInvite', {method: 'POST', headers: {'Content-Type':'Application/json'}, credentials: 'include', body: JSON.stringify({code: e.target.dataset.code})});
     const response = await res.json();
     if (response.success) {
-        const userDetailsRes = await fetch('/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}});
+        const userDetailsRes = await fetch(apiUrl+'/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}});
         const userDetails = await userDetailsRes.json();
         await initiateAccountant(userDetails);
         popup('Invitation accepted!')        
@@ -677,10 +677,10 @@ async function acceptAccInvite(e) {
 }
 
 async function refuseAccInvite(e) {
-    const res = await fetch('/db/refuseAccInvite', {method: 'POST', headers: {'Content-Type':'Application/json'}, credentials: 'include', body: JSON.stringify({code: e.target.dataset.code})});
+    const res = await fetch(apiUrl+'/db/refuseAccInvite', {method: 'POST', headers: {'Content-Type':'Application/json'}, credentials: 'include', body: JSON.stringify({code: e.target.dataset.code})});
     const response = await res.json();
     if (response.success) {
-        const userDetailsRes = await fetch('/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}});
+        const userDetailsRes = await fetch(apiUrl+'/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}});
         const userDetails = await userDetailsRes.json();
         await initiateAccountant(userDetails);
         popup('Invitation refused!')        
@@ -691,7 +691,7 @@ async function refuseAccInvite(e) {
 
 function handleSubmitAccountant() {
     const formdata = new FormData(newAccountantForm);    
-    fetch('auth/inviteAccountant', {method: 'POST', credentials: 'include', body: formdata})
+    fetch(apiUrl+'auth/inviteAccountant', {method: 'POST', credentials: 'include', body: formdata})
     .then((reply)=>reply.json()).then((response)=>{
         if (response.success) {            
             document.getElementById('cancelInviteAccountantButton').classList.remove('restricted-disable'); 
@@ -707,7 +707,7 @@ function handleSubmitAccountant() {
 }
 
 function handleCancelInviteAccountant() {
-    fetch('auth/cancelInviteAccountant', {method: 'DELETE', credentials: 'include'})
+    fetch(apiUrl+'auth/cancelInviteAccountant', {method: 'DELETE', credentials: 'include'})
     .then((reply)=>reply.json()).then((response)=>{
         if (response.success) {
             popup('Invitation cancelled!');
@@ -722,7 +722,7 @@ function handleCancelInviteAccountant() {
 }
 
 function handleResendInviteAccountant() {
-    fetch('/auth/resendInviteAccountant', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}})
+    fetch(apiUrl+'/auth/resendInviteAccountant', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}})
     .then((res)=>res.json()).then((response)=>{
         if (response.success) {
             popup('New invitation sent!');
@@ -737,11 +737,11 @@ function handleResendInviteAccountant() {
 }
 
 function handleRevokeAccountant() {
-    fetch('auth/revokeAccountant', { method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'}})
+    fetch(apiUrl+'auth/revokeAccountant', { method: 'POST', credentials: 'include', headers: {'Content-Type':'application/json'}})
     .then((reply)=>reply.json()).then((response)=>{
         console.log('response ',response);
         if (response.success) {
-            fetch('/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}})
+            fetch(apiUrl+'/auth/fullProfile', { method: 'GET', credentials: 'include', headers: { 'Content-Type':'application/json'}})
             .then((res)=>res.json())
             .then((userDetails)=>{
                 initiateAccountant(userDetails)
@@ -758,7 +758,7 @@ function initiateSubscription(userDetails) {
         document.getElementById('subscriptionDetails').innerHTML = `You have access as part of a member of ${userDetails.org_name}. Your subscription is managed by their admin.`;
         return;
     }
-    fetch('/stripe/check-status', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}})
+    fetch(apiUrl+'/stripe/check-status', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}})
     .then((reply)=>reply.json()).then((response)=>{
         switch (response.status) {
             case 'accountant':

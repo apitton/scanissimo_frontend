@@ -6,7 +6,7 @@ export function init() {
 }
 
 async function initOrganisation() {
-    const fullProfileRes = await fetch('/auth/fullProfile', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} });
+    const fullProfileRes = await fetch(apiUrl+'/auth/fullProfile', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} });
     const fullProfile = await fullProfileRes.json();
     if (!fullProfile.is_org_admin) {
         document.getElementById('mainSection').innerHTML='<h1>This page is for admins only</h1>';
@@ -37,7 +37,7 @@ async function initOrganisation() {
 async function fillStaff() {
     // list section
     document.getElementById('usersBody').innerHTML='';
-    const staffRes = await fetch('db/getStaff', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} })
+    const staffRes = await fetch(apiUrl+'db/getStaff', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} })
     const staff = await staffRes.json();
     console.log('staff ',staff);
     staff.forEach((el)=>{
@@ -63,7 +63,7 @@ async function fillStaff() {
     })
 
     //team section
-    const teamsRes = await fetch('/db/getTeams', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} });
+    const teamsRes = await fetch(apiUrl+'/db/getTeams', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} });
     const teams = await teamsRes.json();
     console.log('teams ', teams,'array? ',Array.isArray(teams));
     const teamsDisplay = fillTeam(teams, '', true);
@@ -98,7 +98,7 @@ async function fillStaff() {
         const id=e.target.value;
         if (!id) return;
         console.log('id ', id);
-        const teamRes = await fetch('/db/getTeamMembers', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: id })})
+        const teamRes = await fetch(apiUrl+'/db/getTeamMembers', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: id })})
         const team = await teamRes.json();
         console.log('staff ', staff);                
         await fillSelectNewStaff(staff, team);        
@@ -111,7 +111,7 @@ async function fillStaff() {
 async function fillSelectNewStaff(staff, team) {
     document.getElementById('selectNewStaff').innerHTML="";
     const id = document.getElementById('selectManager').value;
-    const lineManagersRes = await fetch('/db/getLineManagers', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ user_id: id })});
+    const lineManagersRes = await fetch(apiUrl+'/db/getLineManagers', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ user_id: id })});
     const lineManagers = await lineManagersRes.json();
     console.log('linemanagers ', lineManagers);
     const staffIds = team.map((el)=>el.id);
@@ -135,7 +135,7 @@ async function handleRemoveFromTeam() {
     const name = document.getElementById('selectExistingStaff').querySelector('option:checked').innerHTML;
     const managerId=document.getElementById('selectManager').value;
     if (!staffId) return;
-    const res = await fetch('/db/removeFromTeam', { method:'DELETE', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: staffId, managerId: managerId })})
+    const res = await fetch(apiUrl+'/db/removeFromTeam', { method:'DELETE', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: staffId, managerId: managerId })})
     const result=await res.json();
     if (!res.ok) {
         popup('Error during removal please try again later.')
@@ -153,7 +153,7 @@ async function handleAddToTeam() {
     const managerId=document.getElementById('selectManager').value;
     if (!staffId) return;
     console.log('sending ', { id: staffId, managerId: managerId });
-    const res = await fetch('/db/addToTeam', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: staffId, managerId: managerId })})
+    const res = await fetch(apiUrl+'/db/addToTeam', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: staffId, managerId: managerId })})
     const result=await res.json();
     if (!res.ok) {
         popup('Error during removal please try again later.')
@@ -166,9 +166,9 @@ async function handleAddToTeam() {
 }
 
 async function refreshDropDowns() {
-    const staffRes = await fetch('db/getStaff', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} })
+    const staffRes = await fetch(apiUrl+'db/getStaff', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'} })
     const staff = await staffRes.json();
-    const teamRes = await fetch('/db/getTeamMembers', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: document.getElementById('selectManager').value })})
+    const teamRes = await fetch(apiUrl+'/db/getTeamMembers', { method:'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: document.getElementById('selectManager').value })})
     const team = await teamRes.json();
     fillSelectNewStaff(staff, team);        
     fillExistingStaff(team);
@@ -178,7 +178,7 @@ function handleStatus(e) {
     console.log('change status fired');
     const id = e.target.id.split('-')[1];
     const field = e.target.id.split('-')[0];
-    fetch('/auth/changeStatus', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: id, field: field }) })
+    fetch(apiUrl+'/auth/changeStatus', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: id, field: field }) })
     .then((res)=> res.json()).then((response)=>{
         console.log('response ', response);
         if (response.success) {        
@@ -196,7 +196,7 @@ function handleStatus(e) {
 function handleAddStaff(e){
     e.preventDefault();
     const formdata = new FormData(e.target);
-    fetch('/auth/addStaff', { method: 'POST', credentials: 'include', body: formdata })
+    fetch(apiUrl+'/auth/addStaff', { method: 'POST', credentials: 'include', body: formdata })
     .then((res)=>res.json()).then((response)=>{
         if (response.success) {
             popup('New member of staff invited!')
@@ -218,7 +218,7 @@ async function handleRemove(e) {
         infoModal.dispose();
         const id = e.target?.id.split('-');
         const code = e.target?.dataset?.code;
-        const res = await fetch('/auth/removeStaff', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: id, code: code }) })
+        const res = await fetch(apiUrl+'/auth/removeStaff', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: id, code: code }) })
         const response = res.json();
         if (response.ok) {
             e.target.closest('tr').remove();
@@ -235,7 +235,7 @@ async function handleRemove(e) {
 
 function handleResendInvite(e) {
     console.log(e.target?.dataset?.code);
-    fetch('/auth/resendStaffInvite', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'Application/json' }, body: JSON.stringify({ code: e.target?.dataset?.code })})
+    fetch(apiUrl+'/auth/resendStaffInvite', { method: 'POST', credentials: 'include', headers: { 'Content-Type': 'Application/json' }, body: JSON.stringify({ code: e.target?.dataset?.code })})
     .then((res)=>res.json()).then((response)=>{
         if (response.success) {
             popup('Invitation resent');

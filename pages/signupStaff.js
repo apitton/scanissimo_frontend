@@ -15,7 +15,7 @@ async function handleSubmitEmail(e) {
     document.getElementById('code').value = invite_code;
     document.getElementById('inviteCode').value = invite_code;
     const formdata=new FormData(e.target);
-    const reply = await fetch('/auth/checkStaffInvited', { method: 'POST', body: formdata});
+    const reply = await fetch(apiUrl+'/auth/checkStaffInvited', { method: 'POST', body: formdata});
     const response = await reply.json();  
     if (response.success) {
         document.getElementById('wait').classList.add('restricted-disable');
@@ -49,7 +49,7 @@ function initializeForm() {
     }))
     document.getElementById('newStaffPassword').addEventListener('submit',(e)=>{
         const formdata=new FormData(e.target);
-        fetch('/auth/StaffInvitedPassword', { method: 'POST', body: formdata })
+        fetch(apiUrl+'/auth/StaffInvitedPassword', { method: 'POST', body: formdata })
         .then((res)=>res.json()).then((response)=>{
             if (response.id) {
                 if (response.loggedIn) return loadPageAndScript('/pages/missingInfo.html');

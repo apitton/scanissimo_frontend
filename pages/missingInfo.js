@@ -8,7 +8,7 @@ export async function init() {
 
 async function initializeFields() {
     initializePhone('phone');
-    const res = await fetch('/stripe/check-status', {method: 'GET', credentials: 'include'})
+    const res = await fetch(apiUrl+'/stripe/check-status', {method: 'GET', credentials: 'include'})
     let response = await res.json();
     let missingInfo = response.info;
     console.log('missingInfo ', missingInfo)
@@ -77,12 +77,12 @@ async function initializeFields() {
                     document.getElementById('acc_details').classList.add('noOpacity');
                 }})})
         document.getElementById('t_and_c_popup').addEventListener('click',()=>{
-            fetch('./pages/t_and_c.html').then(fetchHref=>(fetchHref.text()))
+            fetch(apiUrl+'./pages/t_and_c.html').then(fetchHref=>(fetchHref.text()))
             .then((result)=>popup(result));
         })
         console.log('adding event listener for missingForm2');
         document.getElementById('missingForm2').addEventListener('submit', handleMissingInfo2);
-        const accountantInviteRes = await fetch('auth/checkIfAccountantInvited', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}});
+        const accountantInviteRes = await fetch(apiUrl+'auth/checkIfAccountantInvited', { method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}});
         const accountantInvite = await accountantInviteRes.json();
         if (accountantInvite.invite) {
             document.getElementById('acceptAccountantInvite').classList.remove('restricted-disable');
@@ -96,7 +96,7 @@ async function initializeFields() {
     }
 
 function handleAcceptAccountantInvite() {
-    fetch('/auth/acceptAccountantInvited', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}})
+    fetch(apiUrl+'/auth/acceptAccountantInvited', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}})
     .then((res)=>res.json()).then((response)=>{
         if (response.success) {
             popup('Thanks for accepting the invitation!')
@@ -109,7 +109,7 @@ function handleAcceptAccountantInvite() {
 } 
 
 function handleRefuseAccountantInvite() {
-    fetch('/auth/refuseAccountantInvited', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}})
+    fetch(apiUrl+'/auth/refuseAccountantInvited', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}})
     .then((res)=>res.json()).then((response)=>{
         if (response.success) {
             popup('Thanks. Your refusal is taken into account.')
@@ -167,7 +167,7 @@ function handleEdit_phone (e) {
 function updateDetails(newDetails) {
     const body=JSON.stringify(newDetails)
     console.log(body);
-    return fetch('db/amendUserDetails',{method: 'PUT', headers: {'Content-Type':'application/json'}, credentials: 'include', body: body})
+    return fetch(apiUrl+'db/amendUserDetails',{method: 'PUT', headers: {'Content-Type':'application/json'}, credentials: 'include', body: body})
     .then((res)=>res.json())
     .then((reply)=>{
         console.log('reply from update: ', reply)
@@ -190,7 +190,7 @@ function handleResendCode(e) {
         body.phone=document.querySelector('.iti__selected-dial-code').innerHTML + phone;
     }
     console.log('body ',body);
-    fetch('db/resendVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify(body)})
+    fetch(apiUrl+'db/resendVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify(body)})
     .then((reply)=>reply.json())
     .then((response)=>{
         if (response.success) {
@@ -274,7 +274,7 @@ async function handleMissingInfo2(e) {
         let [update, updateUser] = [{}, null];
         try {
             if (document.getElementById('organisation').checked) {
-                const orgId = await fetch('/auth/createOrganisation', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({org_name: document.getElementById('org_name')})});
+                const orgId = await fetch(apiUrl+'/auth/createOrganisation', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({org_name: document.getElementById('org_name')})});
                 const orgIdResponse = await orgId.json();
                 update.organisation_id = orgIdResponse.orgId;
                 update.is_manager = true;
@@ -282,7 +282,7 @@ async function handleMissingInfo2(e) {
                 console.log('orgId ', orgIdResponse)
             }
             if (document.getElementById('accountant').checked) {
-                const accId = await fetch('/auth/createAccountant', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({acc_name: document.getElementById('acc_name')})});
+                const accId = await fetch(apiUrl+'/auth/createAccountant', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({acc_name: document.getElementById('acc_name')})});
                 const accIdResponse = await accId.json();
                 console.log('accIdResponse ', accIdResponse);
                 update.is_accountant = true;
@@ -291,7 +291,7 @@ async function handleMissingInfo2(e) {
             }
             if (document.getElementById('offers').checked) update.agree_offers=true;
                 update.onboarding_complete=true;
-                updateUser = await fetch('/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(update)});
+                updateUser = await fetch(apiUrl+'/db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(update)});
             if (updateUser.ok) console.log('user updated')
         } catch(err) {
             console.log('error ', err)
@@ -305,7 +305,7 @@ async function handleMissingInfo2(e) {
                 document.getElementById('missingInfo3').classList.remove('restricted-disable');
 
                 try { 
-                    const qrCodeReq = await fetch('auth/generateMfa', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})                
+                    const qrCodeReq = await fetch(apiUrl+'auth/generateMfa', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})                
                     const qrCode = await qrCodeReq.json();
                     console.log('qrCode: ',qrCode);
                     if (qrCodeReq.ok) {
@@ -354,20 +354,20 @@ function backtrackForm2(update) {
     let promiseArray=[];
     if (update.is_accountant) {
         backtrack.is_accountant=false;
-        if (update.accId) promiseArray.push(fetch('auth/deleteAccountant', {method: 'DELETE', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({accId: update.accId})}))
+        if (update.accId) promiseArray.push(fetch(apiUrl+'auth/deleteAccountant', {method: 'DELETE', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({accId: update.accId})}))
     }
     if (update.organisation_id) {
         backtrack.organisation_id = null;
         backtrack.is_org_admin = false;
         backtrack.is_manager = false;
-        if (update.orgId) promiseArray.push(fetch('auth/deletOrganisation', {method: 'DELETE', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({org_id: org_id}) }))
+        if (update.orgId) promiseArray.push(fetch(apiUrl+'auth/deletOrganisation', {method: 'DELETE', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify({org_id: org_id}) }))
     }
     backtrack.onboarding_complete = false;
     backtrack.mfa_enabled = false;
     backtrack.mfa_secret = false;
     backtrack.agree_offers = false;
 
-    promiseArray.push(fetch('db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(backtrack)}))
+    promiseArray.push(fetch(apiUrl+'db/amendUserDetails', {method: 'PUT', credentials: 'include', headers: {'Content-Type':'application/json'}, body: JSON.stringify(backtrack)}))
     
     return Promise.all(promiseArray);
     
@@ -377,7 +377,7 @@ function backtrackForm2(update) {
 export function handleMfaSubmit(e) {
     e.preventDefault();
     const code = document.getElementById('verifCode').value;
-    fetch('auth/validateMfa', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({code: code})})
+    fetch(apiUrl+'auth/validateMfa', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({code: code})})
     .then((response)=>{
         if (response.ok) {
             routeNextPage();
@@ -394,7 +394,7 @@ export function handleVerifCodeSubmit(e) {
     const type=e.target.id.split('_')[1];
     console.log('type ', type,'e.target.id ', e.target.id)
     const code=document.getElementById(`${type}Code`).value;
-    fetch('db/checkVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify({type: type, code: code})})
+    fetch(apiUrl+'db/checkVerifCode', {method: 'POST', headers: {'Content-Type':'application/json'}, credentials: 'include', body: JSON.stringify({type: type, code: code})})
     .then((reply)=>reply.json())
     .then((response)=>{
         const target = document.getElementById(type);
@@ -409,7 +409,7 @@ export function handleVerifCodeSubmit(e) {
                 ['phoneCodeRow','phoneCodeRowExplain', 'edit_phone'].forEach((row)=>document.getElementById(row).classList.add('restricted-disable'));
                 document.getElementById('phoneSuccess').classList.remove('restricted-disable');
             }
-            fetch('/stripe/check-status', {method: 'GET', credentials: 'include'})
+            fetch(apiUrl+'/stripe/check-status', {method: 'GET', credentials: 'include'})
             .then((res)=>res.json()).then((response)=>{
                 if (response.info.email_verified && response.info.phone_verified) {
                 document.getElementById('missingInfo1').classList.add('restricted-disable');

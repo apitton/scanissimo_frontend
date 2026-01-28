@@ -106,7 +106,7 @@ async function handleSubmit(e) {
     console.log('formdata', formdata);
     for (const [key, value] of formdata.entries()) {
         console.log(`${key} → "${value}"`); };
-    const reply = await fetch('/auth/register',{method: 'POST', body: formdata});
+    const reply = await fetch(apiUrl+'/auth/register',{method: 'POST', body: formdata});
     const response = await reply.json();
     console.log(response);
     if (response.ok) {

@@ -12,7 +12,7 @@ export function init() {
                                 document.getElementById('mfaCodeSubmit').classList.add('disabled');
                             } })
     document.getElementById('mfa').addEventListener('submit',submitMfa);
-    return fetch('auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
+    return fetch(apiUrl+'auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
             .then((reply)=>reply.json())
             .then((response)=>console.log(response));
 }
@@ -20,7 +20,7 @@ export function init() {
 function submitMfa(e) {
     e.preventDefault();
     const formData = new FormData(mfa);
-    fetch('/auth/mfa', {method: 'POST', credentials: 'include', body: formData})
+    fetch(apiUrl+'/auth/mfa', {method: 'POST', credentials: 'include', body: formData})
     .then((reply)=>reply.json())
     .then((data)=>{        
         console.log('login response: ',data );        
@@ -30,7 +30,7 @@ function submitMfa(e) {
             popup(data.error);
         } else {
             console.log('success');
-            return fetch('auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
+            return fetch(apiUrl+'auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
             .then((reply)=>reply.json())
             .then((response)=>{
                 console.log(response)

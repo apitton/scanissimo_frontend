@@ -2,7 +2,7 @@ export function init() {
     console.log('dashboard');
     const invoiceViewMode = document.getElementById('invoiceViewMode');
     ['viewReceipts','addReceipt', 'genStatement', 'viewStatements'].forEach((el)=>document.getElementById(el).addEventListener('click',()=>invoiceViewMode.dataset.invoiceViewMode="client"));    
-    fetch('auth/session',{method: 'GET', headers: {'Content-Type': 'Application/json'}})
+    fetch(apiUrl+'auth/session',{method: 'GET', headers: {'Content-Type': 'Application/json'}})
     .then((reply)=>reply.json())
     .then((response)=>{
         console.log(response);        

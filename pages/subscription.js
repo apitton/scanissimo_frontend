@@ -13,19 +13,19 @@ export function init() {
 }
 
 async function checkSession() {
-    const reply = await fetch('auth/session',{method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'})
+    const reply = await fetch(apiUrl+'auth/session',{method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'})
     return reply.json(); }
 
 function handleFreeTrial(e) {
     e.preventDefault();
-    fetch('auth/session', {method: 'GET', headers: {'Content-Type':'application/json'}, credentials: 'include'})
+    fetch(apiUrl+'auth/session', {method: 'GET', headers: {'Content-Type':'application/json'}, credentials: 'include'})
     .then((reply)=>reply.json())
     .then((response)=>{
         console.log(response);
         if (!response.authenticated) {
             return({error: 'Please log in or sign up first'});
         } else {
-            return fetch('stripe/start-free-trial', {method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({userId: response.user.id})});
+            return fetch(apiUrl+'stripe/start-free-trial', {method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({userId: response.user.id})});
         }    })
     .then((reply)=>reply.json())
     .then((response)=>{
@@ -47,7 +47,7 @@ export async function handleCheckoutSession(e) {
     for (const [key, value] of formData.entries()) {
         console.log(`${key} → "${value}"`); 
     };
-    const reply = await fetch('/stripe/create-checkout-session/', {method:'POST', credentials: 'include', body: formData });      
+    const reply = await fetch(apiUrl+'/stripe/create-checkout-session/', {method:'POST', credentials: 'include', body: formData });      
     const response= await reply.json();
     console.log('response ', response)
     if (!response.redirect) {                    

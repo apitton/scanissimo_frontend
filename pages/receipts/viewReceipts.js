@@ -2,7 +2,7 @@ import {popup, manageModalButtons, restoreFooter} from '../../script.js'
 export function init() {    
     console.log('view receipts');
     document.getElementById('searchForm').addEventListener('submit', handleSearchForm);
-    fetch('auth/session').then((res)=>res.json())
+    fetch(apiUrl+'auth/session').then((res)=>res.json())
     .then((res)=>{
         document.getElementById('userId').value=res.user.id;
         document.getElementById('userEmail').value=res.user.email;
@@ -36,7 +36,7 @@ async function initForm() {
     const categories = await catResult.json();
     const cat = categories.categories.map((el)=>({ html: el.category, value: el.category }));
     populateSelects('category', cat);
-    const currResult = await fetch('db/getCurrencyCodes', {method: 'GET', headers: {'Content-Type':'Application/json'} });
+    const currResult = await fetch(apiUrl+'db/getCurrencyCodes', {method: 'GET', headers: {'Content-Type':'Application/json'} });
     const currencies = await currResult.json();    
     populateSelects('currency', currencies.map((el)=>({ html: el, value: el })))
     const teamResult = await fetch(`db/getTeamMembers`, {method: 'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: document.getElementById('userId').value})});
@@ -80,7 +80,7 @@ async function handleSearchForm(e) {
     }
     if (document.getElementById('invoiceViewMode').dataset.invoiceViewMode=="organisation") document.getElementById('viewMode').value="org-self";
     const formdata = new FormData(document.getElementById('searchForm'));
-    const reply = await fetch('db/findReceipts', {method: 'POST', credentials: 'include', body: formdata});
+    const reply = await fetch(apiUrl+'db/findReceipts', {method: 'POST', credentials: 'include', body: formdata});
     const results = await reply.json();
     console.log(results);
     let toDisplay;
@@ -226,7 +226,7 @@ export function handleGenerateLink(id=null) {
     if (receipts.length==0) {
         console.log('no box ticked');
     } else {
-        fetch('db/generateDownloadLink',{method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({receipts: receipts})})
+        fetch(apiUrl+'db/generateDownloadLink',{method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({receipts: receipts})})
         .then((reply)=>reply.json())
         .then((response)=>{
             console.log('link ',response)
@@ -251,7 +251,7 @@ function handleDlSend() {
     //expects {template: 'template_name || none', variables: {variables} || none, subject: 'subject', recipients: [recipients], text: 'text || none'}    
     const body = {template: 'send_link', variables: {link: document.getElementById('dlLinkInput').value}, subject: 'Your Scanceipt invoice link', recipients: [document.getElementById('userEmail').value]};
     console.log('body ', body);
-    fetch('mail/send', { method: 'POST', headers: {'Content-Type':'Application/json'}, body: JSON.stringify(body) })
+    fetch(apiUrl+'mail/send', { method: 'POST', headers: {'Content-Type':'Application/json'}, body: JSON.stringify(body) })
     .then((result)=>console.log('mail sent'))
     .catch((err)=>console.log('problem sending email ', err))
 }
@@ -297,7 +297,7 @@ function handleRowClick(row) {
     row.validation_timestamp?validated.innerHTML='&#x2705':validated.innerHTML=`&#x23F3`;            
     document.getElementById('invoiceAmountExVat').value=Math.round((row.receipt_amount - row.receipt_vat)*100)/100;    
     //filling up items section
-    fetch('db/getReceiptItems', {method: 'POST', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({receipt_id: row.id})})
+    fetch(apiUrl+'db/getReceiptItems', {method: 'POST', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({receipt_id: row.id})})
     .then((reply)=>reply.json())
     .then((result)=>{
         console.log('result ',result);
@@ -320,7 +320,7 @@ function handleRowClick(row) {
                 itemsTable.querySelector('tbody').appendChild(newRow);
                 console.log('last');                
             });            
-            return fetch('db/getReceiptImg',{ method: 'POST', headers: {'Content-Type': 'Application/json'}, body:JSON.stringify({path: row.storage_path})})
+            return fetch(apiUrl+'db/getReceiptImg',{ method: 'POST', headers: {'Content-Type': 'Application/json'}, body:JSON.stringify({path: row.storage_path})})
         }    
     })    
     //filling up the image
@@ -415,7 +415,7 @@ async function validateReceipt(id, modal) {
             infoModal.dispose();});
     }
     function validate(id) {
-        return fetch('/db/validateReceipt', { method: 'POST', credentials: 'include', headers: {'content-type': 'Application/json'}, body: JSON.stringify({ receipt_id: id })})
+        return fetch(apiUrl+'/db/validateReceipt', { method: 'POST', credentials: 'include', headers: {'content-type': 'Application/json'}, body: JSON.stringify({ receipt_id: id })})
         .then((res)=>res.json()).then((result)=>result.success);
     }    
 }
@@ -446,7 +446,7 @@ export function handleDownload(results, id=null) {
         const receipt = results.find(r=>r.id==id)
         const storage_path = receipt.storage_path;
         const extension=storage_path.split('.')[1];
-        fetch('db/getReceiptImg',{ method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({path: storage_path})})
+        fetch(apiUrl+'db/getReceiptImg',{ method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}, body:JSON.stringify({path: storage_path})})
         .then((res)=> {
             if (!res.ok) console.log('file not found')
             return res.blob();
@@ -514,7 +514,7 @@ export function handleDelete(results, id=null, modal=null) {
         receipts.forEach((id)=>{
             const receipt = results.find(r=>r.id==id)
             const storage_path = receipt.storage_path;
-            fetch('db/deleteReceipt', {method: 'DELETE', headers: { 'Content-Type':'Application/json' }, body: JSON.stringify({id: id, storage_path: storage_path})})
+            fetch(apiUrl+'db/deleteReceipt', {method: 'DELETE', headers: { 'Content-Type':'Application/json' }, body: JSON.stringify({id: id, storage_path: storage_path})})
             .then((res)=>res.json())                                
             .catch((err)=>console.log('error ', err)) })
         }    
@@ -548,7 +548,7 @@ export async function handleEdit(receipt) {
     const toAmend = [...inputs, ...selects]
     inputs.forEach((el)=>document.getElementById(el).readOnly = false)
     toAmend.forEach((el)=>document.getElementById(el).classList.add('editable'));
-    const result = await fetch('db/getCurrencyCodes', {method: 'GET', headers: {'Content-Type':'Application/json'} });
+    const result = await fetch(apiUrl+'db/getCurrencyCodes', {method: 'GET', headers: {'Content-Type':'Application/json'} });
     const currencies = await result.json();    
     populateSelects('receipt_currency', currencies.map((row)=>({ html: row, value: row })))
     const catResult = await fetch(`db/getClientCategories`, {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}});
@@ -581,7 +581,7 @@ export async function handleEdit(receipt) {
         body.id=receipt.id;
         body.user_id = receipt.user_id;
         console.log(body);
-        fetch('db/updateReceipt', {method: 'PUT', headers: {'Content-Type': 'Application/json'}, body: JSON.stringify(body) })
+        fetch(apiUrl+'db/updateReceipt', {method: 'PUT', headers: {'Content-Type': 'Application/json'}, body: JSON.stringify(body) })
         .then((res)=>console.log('updated ',res))
         restoreFooter();
         document.getElementById('editModal').classList.remove('currentPagination');

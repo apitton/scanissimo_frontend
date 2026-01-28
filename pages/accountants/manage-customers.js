@@ -8,7 +8,7 @@ export async  function init() {
 }
 
 async function initAccountant() {
-    const existingCustomersRes =  await fetch('db/getAccountantCustomers', { method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'});
+    const existingCustomersRes =  await fetch(apiUrl+'db/getAccountantCustomers', { method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'});
     const existingCustomers = await existingCustomersRes.json();
     if (!existingCustomers.length) {
         document.getElementById('existingCustomers').innerHTML='No customers yet.'    
@@ -23,7 +23,7 @@ async function initAccountant() {
         return `<li class="d-flex w-100 justify-content-between">${name}<button data-type="${el.type}" data-id="${el.id}" type="button" class="btn btn-outline-primary smallButton removeButton">Remove</button></li>`
     }).join('');    
     }    
-    const pendingInvitationsFromCustomersRes = await fetch('db/getPendingInvitationsFromCustomers', { method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'});
+    const pendingInvitationsFromCustomersRes = await fetch(apiUrl+'db/getPendingInvitationsFromCustomers', { method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'});
     const pendingInvitationsFromCustomers = await pendingInvitationsFromCustomersRes.json();
     if (!pendingInvitationsFromCustomers.length) {
         document.getElementById('invitationsReceived').innerHTML='No pending invitations from customers.'
@@ -42,7 +42,7 @@ async function initAccountant() {
     
     
     
-    const pendingInvitationsFromAccRes = await fetch('db/getPendingInvitationsFromAccountant', { method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'});
+    const pendingInvitationsFromAccRes = await fetch(apiUrl+'db/getPendingInvitationsFromAccountant', { method: 'GET', headers: {'Content-Type':'Application/json'}, credentials: 'include'});
     const pendingInvitationsFromAcc = await pendingInvitationsFromAccRes.json();
     if (!pendingInvitationsFromAcc.length) {
         document.getElementById('invitationsSent').innerHTML='No invitations pending.'        
@@ -69,7 +69,7 @@ async function sendInvitation(e) {
         formdata.append('invite_first_name', e.target.dataset.first_name)}    
     console.log('target ',e.target.querySelectorAll('input'));
     if (Array.from(e.target.querySelectorAll('input')).some((el)=>!el.value)) return popup('Please fill all the required fields');
-    const res = await fetch('/db/sendInvitationFromAccountant', { method: 'POST', credentials: 'include', body: formdata })
+    const res = await fetch(apiUrl+'/db/sendInvitationFromAccountant', { method: 'POST', credentials: 'include', body: formdata })
     const response = await res.json();
     if (response.success) {
         await initAccountant();    
@@ -80,7 +80,7 @@ async function sendInvitation(e) {
 }
 
 async function acceptInvitation(e) {
-    const res = await fetch('/db/acceptAccountantInvited', { method: 'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: e.target.dataset.id, type: e.target.dataset.type })});
+    const res = await fetch(apiUrl+'/db/acceptAccountantInvited', { method: 'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: e.target.dataset.id, type: e.target.dataset.type })});
     const result = await res.json();
     if(result.success) {
         popup('Invitation accepted!');
@@ -91,7 +91,7 @@ async function acceptInvitation(e) {
 }
 
 async function refuseInvitation(e) {
-    const res = await fetch('/db/refuseInvitationFromCustomer', { method: 'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: e.target.dataset.id, type: e.target.dataset.type })});
+    const res = await fetch(apiUrl+'/db/refuseInvitationFromCustomer', { method: 'POST', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ id: e.target.dataset.id, type: e.target.dataset.type })});
     const result = await res.json();
     if(result.success) {
         popup('Invitation refused!');
@@ -102,7 +102,7 @@ async function refuseInvitation(e) {
 }
 
 async function revokeInvitation(e) {
-    const res = await fetch('/db/revokeInvitationFromAccountant', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ code: e.target.dataset.code, type: e.target.dataset.type })});
+    const res = await fetch(apiUrl+'/db/revokeInvitationFromAccountant', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ code: e.target.dataset.code, type: e.target.dataset.type })});
     const result = await res.json();
     if(result.success) {
         popup('Invitation revoked!');
@@ -113,7 +113,7 @@ async function revokeInvitation(e) {
 }
 
 async function removeCustomer(e) {    
-    const res = await fetch('db/removeCustomer', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ type: e.target.dataset.type, id: e.target.dataset.id })})
+    const res = await fetch(apiUrl+'db/removeCustomer', { method: 'PUT', credentials: 'include', headers: {'Content-Type':'Application/json'}, body: JSON.stringify({ type: e.target.dataset.type, id: e.target.dataset.id })})
     const response = await res.json();
     if (response.success) {
         popup('Customer removed!');

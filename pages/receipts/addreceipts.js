@@ -7,7 +7,7 @@ export async function init() {
     const invoiceViewMode = document.getElementById('invoiceViewMode').dataset.invoiceViewMode;    
     if (invoiceViewMode=="accountant") {        
         document.getElementById('accountantOnly').classList.remove('restricted-disable');
-        const customersRes = await fetch('/db/getAccountantCustomers', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}})
+        const customersRes = await fetch(apiUrl+'/db/getAccountantCustomers', { method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}})
         const customers = await customersRes.json();
         const customersToDisplay = customers.map((row)=>{ 
             if (row.type=="org") return { html: row.name, value: row.id }
@@ -20,7 +20,7 @@ export async function init() {
     if (invoiceViewMode == "organisation") {
         ['accountantOnly','staffLabel', 'staff'].forEach((el)=>document.getElementById(el).classList.remove('restricted-disable'));
         ['client', 'clientLabel'].forEach((el)=>document.getElementById(el).classList.add('restricted-disable'));        
-        const staffRes = await fetch('db/getOrganisationStaff', { method: 'POST', credentials: 'include', headers: {'Content-type':'Application/json'}, body: JSON.stringify({ organisation_id: user.organisation_id } )})
+        const staffRes = await fetch(apiUrl+'db/getOrganisationStaff', { method: 'POST', credentials: 'include', headers: {'Content-type':'Application/json'}, body: JSON.stringify({ organisation_id: user.organisation_id } )})
         const staff = await staffRes.json();
         populateSelects('staff', staff.map((row)=>({ html: `${row.first_name} ${row.last_name}`, value: row.id })));        
     }
@@ -117,7 +117,7 @@ async function handleClient(e, customers) {
     console.log('customers ', customers);
     console.log('client ', client);
     if (client?.type=="org") {
-        const staffRes = await fetch('db/getOrganisationStaff', { method: 'POST', credentials: 'include', headers: {'Content-type':'Application/json'}, body: JSON.stringify({ organisation_id: client.id })})
+        const staffRes = await fetch(apiUrl+'db/getOrganisationStaff', { method: 'POST', credentials: 'include', headers: {'Content-type':'Application/json'}, body: JSON.stringify({ organisation_id: client.id })})
         const staff = await staffRes.json();
         populateSelects('staff', staff.map((row)=>({ html: `${row.first_name} ${row.last_name}`, value: row.id })))
         console.log('test ',document.getElementById('staffLabel'));
@@ -145,7 +145,7 @@ async function submitFiles() {
             //console.log('userId before append ', userId)
             //formdata.append("userId[]", parseInt(userId));           
         } }
-    return fetch('api/upload', {method: 'POST', credentials: 'include', body: formdata})
+    return fetch(apiUrl+'api/upload', {method: 'POST', credentials: 'include', body: formdata})
     .then((result)=>{
         if (result.ok) {
             console.log('result ok')
@@ -192,7 +192,7 @@ async function initializeManualEntry() {
     const categories = await catResult.json();
     const cat = categories.categories.map((el)=>({html: el.category, value: el.category}));
     populateSelects('category', cat);
-    const currResult = await fetch('db/getCurrencyCodes', {method: 'GET', headers: {'Content-Type':'Application/json'} });
+    const currResult = await fetch(apiUrl+'db/getCurrencyCodes', {method: 'GET', headers: {'Content-Type':'Application/json'} });
     const currencies = await currResult.json();    
     populateSelects('currency', currencies.map((el)=>({ html: el, value: el })));
 }
@@ -210,7 +210,7 @@ function handleManualSubmit(e) {
     }
     const formdata = new FormData(e.target);
     formdata.append('viewMode', document.getElementById('invoiceViewMode').dataset.invoiceViewMode);
-    fetch('/db/addManualReceipt', { method: 'POST', credentials: 'include', body: formdata })
+    fetch(apiUrl+'/db/addManualReceipt', { method: 'POST', credentials: 'include', body: formdata })
     .then((res)=>res.json()).then((result)=>{
         if (result.success) {
             popup('Receipt uploaded!');

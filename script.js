@@ -14,6 +14,12 @@ document.addEventListener('DOMContentLoaded',()=>{
   const entries = JSON.stringify(Object.fromEntries(params.entries()));
   console.log(entries);
   document.getElementById('mainSection').dataset.data=entries;
+  let location = window.location;
+  if (location.search('localhost')) {
+    apiUrl = '';
+  } else {
+    apiUrl = 'https://smct2d7vjb.execute-api.eu-west-2.amazonaws.com/';
+  }
   if (nonLoginPages.includes(page)) {
     console.log('nonlogin ');
     return loadPageAndScript(page); }

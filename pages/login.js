@@ -21,7 +21,7 @@ function handleSubmit(e) {
     e.preventDefault();
     console.log('submitting login form');
     const formdata = new FormData(e.target);
-    return fetch('./auth/login', {method: 'POST', credentials: 'include', body: formdata})
+    return fetch(apiUrl+'./auth/login', {method: 'POST', credentials: 'include', body: formdata})
     .then((res)=> {return res.json()})
     .then((data)=>{
         console.log('login response: ',data );        
@@ -49,7 +49,7 @@ function handleSubmit(e) {
 }
 
 export function routeNextPage(pageAskedFor) {
-    return fetch('/stripe/check-status', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}})
+    return fetch(apiUrl+'/stripe/check-status', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}})
         .then(reply=>reply.json())
         .then((response)=>{
             let nextPage;
@@ -92,13 +92,13 @@ function fetchCredentials(e) {
     switch (e.target.id) {
         case 'loginForm':
             const formdata = new FormData(e.target);
-            return fetch('./auth/login', {method: 'POST', credentials: 'include', body: formdata});
+            return fetch(apiUrl+'./auth/login', {method: 'POST', credentials: 'include', body: formdata});
         case 'google':
-            return fetch('./auth/google', {method: 'GET', headers: {'Content-Type':'Application/json', 'Access-Control-Allow-Origin': '*'}} )  
+            return fetch(apiUrl+'./auth/google', {method: 'GET', headers: {'Content-Type':'Application/json', 'Access-Control-Allow-Origin': '*'}} )  
         case 'apple':
-            return fetch('./auth/apple', {method: 'GET', headers: {'Content-Type':'Application/json'}} )  
+            return fetch(apiUrl+'./auth/apple', {method: 'GET', headers: {'Content-Type':'Application/json'}} )  
         case 'facebook':
-            return fetch('./auth/facebook', {method: 'GET', headers: {'Content-Type':'Application/json'}} )  
+            return fetch(apiUrl+'./auth/facebook', {method: 'GET', headers: {'Content-Type':'Application/json'}} )  
     }
 }
 
@@ -123,7 +123,7 @@ function trackInput() {
 function submitMfa(e) {
     e.preventDefault();
     const formData = new FormData(mfaForm);
-    fetch('/auth/mfa', {method: 'POST', credentials: 'include', body: formData})
+    fetch(apiUrl+'/auth/mfa', {method: 'POST', credentials: 'include', body: formData})
     .then((reply)=>reply.json())
     .then((data)=>{        
         console.log('login response: ',data );        
@@ -133,7 +133,7 @@ function submitMfa(e) {
             popup(data.error);
         } else {
             console.log('success');
-            return fetch('auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
+            return fetch(apiUrl+'auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'application/json'}})
             .then((reply)=>reply.json())
             .then((response)=>{
                 console.log(response)
