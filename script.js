@@ -24,6 +24,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   } else {
     apiUrl = 'https://smct2d7vjb.execute-api.eu-west-2.amazonaws.com';
   }
+  apiUrl = 'https://smct2d7vjb.execute-api.eu-west-2.amazonaws.com';
   console.log('apiUrl ',apiUrl)
   window.apiUrl=apiUrl;
   if (nonLoginPages.includes(page)) {
@@ -60,7 +61,7 @@ export function handleLinkClick(e) {
 
 export async function loadPageAndScript(pageLink) {
   let pageName;
-  return fetch(apiUrl+'/auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json' }})
+  return fetch(apiUrl+'/auth/session', {method: 'GET', credentials: 'include'})
   .then((reply)=>reply.json()).then((response)=>{
     console.log('session', response);
     window.user=response.user;

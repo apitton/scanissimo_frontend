@@ -49,7 +49,7 @@ function handleSubmit(e) {
 }
 
 export function routeNextPage(pageAskedFor) {
-    return fetch(apiUrl+'/stripe/check-status', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json'}})
+    return fetch(apiUrl+'/stripe/check-status', {method: 'GET', credentials: 'include'})
         .then(reply=>reply.json())
         .then((response)=>{
             let nextPage;
