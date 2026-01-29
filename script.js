@@ -17,12 +17,15 @@ document.addEventListener('DOMContentLoaded',()=>{
   let location = window.location;
   let apiUrl;
   console.log(location.host);
-  console.log('test');
-  if (location.host.search('localhost')) {
+  
+  console.log(!!location.host.search('host'));
+  if (!!location.host.search('host')) {
     apiUrl = '';
   } else {
-    apiUrl = 'https://smct2d7vjb.execute-api.eu-west-2.amazonaws.com/';
+    apiUrl = 'https://smct2d7vjb.execute-api.eu-west-2.amazonaws.com';
   }
+  console.log('apiUrl ',apiUrl)
+  window.apiUrl=apiUrl;
   if (nonLoginPages.includes(page)) {
     console.log('nonlogin ');
     return loadPageAndScript(page); }
