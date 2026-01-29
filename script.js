@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded',()=>{
   let location = window.location;
   let apiUrl;
   console.log(location.host);
+  console.log('test');
   if (location.host.search('localhost')) {
     apiUrl = '';
   } else {
