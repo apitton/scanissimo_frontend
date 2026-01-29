@@ -57,7 +57,7 @@ export function handleLinkClick(e) {
 
 export async function loadPageAndScript(pageLink) {
   let pageName;
-  return fetch('/auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json' }})
+  return fetch(apiUrl+'/auth/session', {method: 'GET', credentials: 'include', headers: {'Content-Type':'Application/json' }})
   .then((reply)=>reply.json()).then((response)=>{
     console.log('session', response);
     window.user=response.user;
@@ -113,7 +113,7 @@ async function logout(e) {
   infoModal.show();
 
   document.getElementById('yesButton').addEventListener('click',()=>{
-    fetch('auth/logout', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}})
+    fetch(apiUrl+'auth/logout', {method: 'POST', credentials: 'include', headers: {'Content-Type': 'application/json'}})
     .then((reply)=>reply.json())
     .then((response)=> {
       if (response.ok) {
